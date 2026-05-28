@@ -1,0 +1,136 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static humanize %}
+
+{% block extrastyle %}
+<style>
+  .dashboard-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem; margin-bottom: 2.5rem;
+  }
+  .stat-card {
+    background: #fff; border: 1px solid #e8e3de; padding: 1.5rem;
+    text-align: center;
+  }
+  .stat-card h3 {
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #8A9E7A; margin: 0 0 0.5rem; font-weight: 500;
+  }
+  .stat-card .value {
+    font-size: 2rem; font-weight: 300; color: #3B2A1F; margin: 0;
+  }
+  .stat-card .sub {
+    font-size: 0.75rem; color: #9c8570; margin-top: 0.3rem;
+  }
+  .dashboard-two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;
+  }
+  .dashboard-section {
+    background: #fff; border: 1px solid #e8e3de; padding: 1.5rem;
+  }
+  .dashboard-section h2 {
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #3B2A1F; margin: 0 0 1rem; font-weight: 500;
+  }
+  .dashboard-table { width: 100%; border-collapse: collapse; }
+  .dashboard-table th {
+    text-align: left; font-size: 0.65rem; letter-spacing: 1px;
+    text-transform: uppercase; color: #8A9E7A; padding: 0.5rem 0.5rem 0.5rem 0;
+    border-bottom: 1px solid #e8e3de; font-weight: 500;
+  }
+  .dashboard-table td {
+    padding: 0.6rem 0.5rem 0.6rem 0; font-size: 0.8rem;
+    border-bottom: 1px solid #f5f3f0; color: #555;
+  }
+  .dashboard-table tr:last-child td { border-bottom: none; }
+  .status-badge {
+    display: inline-block; padding: 2px 8px; font-size: 0.65rem;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .status-pending { background: #f5f3f0; color: #9c8570; }
+  .status-confirmed { background: #e8f0e8; color: #6b8f6b; }
+  .status-shipped { background: #e0e8f0; color: #5a7a9a; }
+  .status-delivered { background: #d4edda; color: #3a7a4a; }
+  .status-cancelled { background: #f8e0e0; color: #a04040; }
+  .module { margin: 0; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}<div class="breadcrumbs"><a href="{% url 'admin:index' %}">{% translate 'Home' %}</a> &rsaquo; {% translate 'Dashboard' %}</div>{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <h1 style="font-weight:300;color:#3B2A1F;margin-bottom:2rem;">Dashboard</h1>
+
+  <div class="dashboard-grid">
+    <div class="stat-card">
+      <h3>Revenue</h3>
+      <p class="value">DA {{ total_revenue|floatformat:"0"|intcomma }}</p>
+      <p class="sub">DA {{ revenue_today|floatformat:"0"|intcomma }} today · DA {{ revenue_month|floatformat:"0"|intcomma }} last 30 days</p>
+    </div>
+    <div class="stat-card">
+      <h3>Orders</h3>
+      <p class="value">{{ total_orders }}</p>
+      <p class="sub">
+        {% for status, count in orders_by_status.items %}
+          {{ status }}: {{ count }}{% if not forloop.last %} · {% endif %}
+        {% endfor %}
+      </p>
+    </div>
+    <div class="stat-card">
+      <h3>Products</h3>
+      <p class="value">{{ total_products }}</p>
+      <p class="sub">Active listings</p>
+    </div>
+    <div class="stat-card">
+      <h3>Customers</h3>
+      <p class="value">{{ total_customers }}</p>
+      <p class="sub">Registered accounts</p>
+    </div>
+  </div>
+
+  <div class="dashboard-two-col">
+    <div class="dashboard-section">
+      <h2>Recent Orders</h2>
+      <table class="dashboard-table">
+        <thead>
+          <tr><th>Order</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          {% for order in recent_orders %}
+          <tr>
+            <td><a href="{% url 'admin:orders_order_change' order.id %}">#{{ order.id }}</a></td>
+            <td>{{ order.full_name }}</td>
+            <td>DA {{ order.total|floatformat:"0"|intcomma }}</td>
+            <td><span class="status-badge status-{{ order.status }}">{{ order.get_status_display }}</span></td>
+            <td style="font-size:0.7rem;color:#9c8570;">{{ order.created_at|date:"M d, H:i" }}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="5" style="color:#9c8570;font-style:italic;">No orders yet.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="dashboard-section">
+      <h2>Quick Actions</h2>
+      <ul style="list-style:none;padding:0;margin:0;">
+        <li style="margin-bottom:0.8rem;">
+          <a href="{% url 'admin:products_product_add' %}" style="color:#3B2A1F;font-size:0.85rem;">+ Add Product</a>
+        </li>
+        <li style="margin-bottom:0.8rem;">
+          <a href="{% url 'admin:orders_order_changelist' %}" style="color:#3B2A1F;font-size:0.85rem;">View All Orders</a>
+        </li>
+        <li style="margin-bottom:0.8rem;">
+          <a href="{% url 'admin:products_product_changelist' %}" style="color:#3B2A1F;font-size:0.85rem;">Manage Products</a>
+        </li>
+        <li style="margin-bottom:0.8rem;">
+          <a href="{% url 'admin:accounts_profile_changelist' %}" style="color:#3B2A1F;font-size:0.85rem;">View Customers</a>
+        </li>
+        <li style="margin-bottom:0.8rem;">
+          <a href="{% url 'admin:contact_contactmessage_changelist' %}" style="color:#3B2A1F;font-size:0.85rem;">Contact Messages</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

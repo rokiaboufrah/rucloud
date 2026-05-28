@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookbook | ru.Cloud</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .lookbook-grid { padding: 4rem 3rem; display: grid; grid-template-columns: repeat(2, 1fr); gap: 4rem; }
+        .lookbook-item { position: relative; }
+        .lookbook-img { aspect-ratio: 4/5; background: #f0f0f0; margin-bottom: 1.5rem; }
+        .lookbook-caption { text-align: center; }
+        .lookbook-title { font-family: var(--font-serif); font-size: 24px; font-style: italic; margin-bottom: 0.5rem; }
+        .lookbook-tag { font-size: 10px; letter-spacing: 3px; color: var(--color-sage); text-transform: uppercase; }
+        
+        .lookbook-item.full-width { grid-column: 1 / -1; }
+        .lookbook-item.full-width .lookbook-img { aspect-ratio: 16/9; }
+    </style>
+</head>
+<body>
+    <nav class="rc-nav">
+        <div class="rc-logo-wrap">
+            <div class="rc-logo-dot"><svg width="18" height="12" viewBox="0 0 30 18"><text x="0" y="14" font-family="Georgia,serif" font-size="13" fill="#f0e6d3" font-style="italic">ru</text></svg></div>
+            <a href="../index.html" class="rc-logo-text">ru.Cloud</a>
+        </div>
+        <div class="rc-nav-links">
+            <a href="shop.html" class="rc-nav-link">Shop</a>
+            <a href="lookbook.html" class="rc-nav-link" style="color: var(--color-accent);">Lookbook</a>
+            <a href="about.html" class="rc-nav-link">Story</a>
+        </div>
+        <div class="rc-nav-right">
+            <a href="cart.html" class="rc-nav-icon">Panier (0)</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-eyebrow">Editorial</div>
+        <h1 class="page-title">The First Drop: Resilience</h1>
+    </header>
+
+    <main class="lookbook-grid">
+        <div class="lookbook-item full-width">
+            <div class="lookbook-img"></div>
+            <div class="lookbook-caption">
+                <h3 class="lookbook-title">Shadows & Light</h3>
+                <span class="lookbook-tag">Chapter I</span>
+            </div>
+        </div>
+        <div class="lookbook-item">
+            <div class="lookbook-img"></div>
+            <div class="lookbook-caption">
+                <h3 class="lookbook-title">The Minimalist Abaya</h3>
+                <span class="lookbook-tag">Chapter II</span>
+            </div>
+        </div>
+        <div class="lookbook-item">
+            <div class="lookbook-img"></div>
+            <div class="lookbook-caption">
+                <h3 class="lookbook-title">Silk & Resilience</h3>
+                <span class="lookbook-tag">Chapter III</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="rc-footer">
+        <div class="rc-footer-bottom">
+            <div class="rc-footer-copy">© 2026 ru.Cloud.</div>
+        </div>
+    </footer>
+</body>
+</html>

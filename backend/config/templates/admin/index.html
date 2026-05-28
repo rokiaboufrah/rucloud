@@ -1,0 +1,28 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}
+<style>
+  .dashboard-link { margin-bottom: 1.5rem; }
+  .dashboard-link a {
+    display: inline-block; background: #3B2A1F; color: #fff !important;
+    padding: 10px 24px; text-decoration: none; font-size: 0.8rem;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .dashboard-link a:hover { opacity: 0.9; }
+  .module table { width: 100%; }
+  .module th { width: auto; }
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+{% block content_title %}<h1>{% translate 'Site administration' %}</h1>{% endblock %}
+
+{% block content %}
+<div class="dashboard-link">
+  <a href="{% url 'admin_dashboard' %}">{% translate 'View Dashboard' %}</a>
+</div>
+<div id="content-main">
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}

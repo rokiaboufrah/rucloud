@@ -1,0 +1,283 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .rc { font-family: 'Montserrat', sans-serif; background: #ffffff; color: #2a1f14; }
+
+  /* NAV */
+  .rc-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    border-bottom: 0.5px solid rgba(42,31,20,0.1);
+    position: sticky; top: 0; background: #ffffff; z-index: 10;
+  }
+  .rc-logo-wrap { display: flex; align-items: center; gap: 10px; }
+  .rc-logo-dot { width: 32px; height: 32px; border-radius: 50%; background: #3b2a1f; display: flex; align-items: center; justify-content: center; }
+  .rc-logo-text { font-family: 'Cormorant Garamond', serif; font-size: 21px; font-weight: 300; letter-spacing: 2px; color: #2a1f14; }
+  .rc-nav-right { display: flex; align-items: center; gap: 2rem; }
+  .rc-nav-icon { display: flex; align-items: center; gap: 6px; color: #7a6248; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; }
+
+  /* HERO */
+  .rc-hero {
+    width: 100%; min-height: 92vh;
+    background: linear-gradient(155deg, #e8e8e8 0%, #efefef 45%, #e2ddd6 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .rc-hero-bg-text {
+    position: absolute; font-family: 'Cormorant Garamond', serif;
+    font-size: 170px; font-weight: 300; color: rgba(42,31,20,0.04);
+    letter-spacing: 10px; white-space: nowrap; top: 50%; left: 50%;
+    transform: translate(-50%, -50%); pointer-events: none; user-select: none;
+  }
+  .rc-hero-inner { text-align: center; z-index: 2; padding: 2rem; }
+  .rc-hero-eyebrow { font-size: 10px; letter-spacing: 5px; color: #8a9e7a; text-transform: uppercase; margin-bottom: 2rem; }
+  .rc-hero-title { font-family: 'Cormorant Garamond', serif; font-size: 68px; font-weight: 300; line-height: 1.05; color: #2a1f14; margin-bottom: 1.5rem; }
+  .rc-hero-title em { font-style: italic; color: #8a6a50; }
+  .rc-hero-sub { font-size: 10px; letter-spacing: 3px; color: #9c8570; text-transform: uppercase; margin-bottom: 3rem; }
+  .rc-hero-btn {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #2a1f14; border: 0.5px solid rgba(42,31,20,0.4);
+    padding: 15px 40px; background: transparent; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; transition: all 0.3s;
+  }
+  .rc-hero-btn:hover { background: rgba(42,31,20,0.05); }
+
+  /* STORY */
+  .rc-story {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border-top: 0.5px solid rgba(42,31,20,0.08);
+    border-bottom: 0.5px solid rgba(42,31,20,0.08);
+  }
+  .rc-story-img {
+    background: #e5e5e5;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 560px;
+    border-right: 0.5px solid rgba(42,31,20,0.08);
+  }
+  .rc-story-img-inner { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
+  .rc-story-img-circle {
+    width: 140px; height: 140px; border-radius: 50%;
+    border: 0.5px solid rgba(138,106,80,0.25);
+    background: #d8d8d8;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rc-story-img-label { font-size: 10px; letter-spacing: 3px; color: #9c8570; text-transform: uppercase; }
+  .rc-story-text {
+    padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center;
+    background: #ffffff;
+  }
+  .rc-story-eyebrow { font-size: 10px; letter-spacing: 4px; color: #8a9e7a; text-transform: uppercase; margin-bottom: 2rem; }
+  .rc-story-title { font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 300; font-style: italic; color: #3b2a1f; line-height: 1.35; margin-bottom: 2rem; }
+  .rc-story-divider { width: 40px; height: 0.5px; background: rgba(138,106,80,0.3); margin-bottom: 2rem; }
+  .rc-story-body { font-size: 12px; line-height: 2.4; color: #7a6550; letter-spacing: 0.5px; margin-bottom: 1.5rem; }
+  .rc-story-body span { color: #8a6a50; font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 15px; }
+  .rc-story-year { font-size: 10px; letter-spacing: 4px; color: #8a9e7a; text-transform: uppercase; }
+
+  /* PALETTE */
+  .rc-palette-section { padding: 5rem 3rem; background: #ebebeb; border-bottom: 0.5px solid rgba(42,31,20,0.06); }
+  .rc-palette-label { font-size: 10px; letter-spacing: 4px; color: #9c8570; text-transform: uppercase; text-align: center; margin-bottom: 3rem; }
+  .rc-palette-row { display: flex; justify-content: center; gap: 0; max-width: 600px; margin: 0 auto; }
+  .rc-palette-swatch { display: flex; flex-direction: column; align-items: center; flex: 1; }
+  .rc-palette-color { width: 100%; height: 90px; }
+  .rc-palette-name { font-size: 10px; letter-spacing: 1.5px; color: #7a6550; text-transform: uppercase; margin-top: 12px; text-align: center; }
+  .rc-palette-hex { font-size: 10px; color: #9c8570; letter-spacing: 1px; margin-top: 4px; }
+
+  /* COLLECTION */
+  .rc-collection { padding: 6rem 3rem; background: #ffffff; }
+  .rc-collection-header { text-align: center; margin-bottom: 4rem; }
+  .rc-collection-eyebrow { font-size: 10px; letter-spacing: 4px; color: #8a9e7a; text-transform: uppercase; margin-bottom: 1.2rem; }
+  .rc-collection-title { font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 300; font-style: italic; color: #3b2a1f; margin-bottom: 1rem; }
+  .rc-collection-sub { font-size: 11px; color: #9c8570; letter-spacing: 2px; }
+
+  .rc-pieces-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 2px; background: rgba(42,31,20,0.06); margin-bottom: 4rem; }
+  .rc-piece-card { background: #e8e8e8; aspect-ratio: 2/3; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; position: relative; overflow: hidden; cursor: pointer; transition: background 0.3s; }
+  .rc-piece-card:hover { background: #e0ddd8; }
+  .rc-piece-card-inner { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; }
+  .rc-piece-icon { width: 64px; height: 64px; border-radius: 50%; border: 0.5px solid rgba(138,106,80,0.2); display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.5); }
+  .rc-piece-label { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: #3b2a1f; }
+  .rc-piece-soon { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: #9c8570; }
+  .rc-piece-tag { position: absolute; top: 1.5rem; right: 1.5rem; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: #8a9e7a; border: 0.5px solid rgba(138,158,122,0.35); padding: 5px 10px; }
+
+  .rc-collection-cta { text-align: center; }
+  .rc-notify-btn {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #3b2a1f; border: 0.5px solid rgba(59,42,31,0.3);
+    padding: 16px 48px; background: transparent; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; transition: all 0.3s; margin-right: 1rem;
+  }
+  .rc-notify-btn:hover { background: rgba(59,42,31,0.04); }
+  .rc-notify-btn-alt {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: #8a9e7a; border: 0.5px solid rgba(138,158,122,0.35);
+    padding: 16px 48px; background: transparent; cursor: pointer;
+    font-family: 'Montserrat', sans-serif; transition: all 0.3s;
+  }
+
+  /* FOOTER */
+  .rc-footer {
+    padding: 2.5rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 0.5px solid rgba(42,31,20,0.1); background: #ebebeb;
+  }
+  .rc-footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; color: #9c8570; letter-spacing: 2px; }
+  .rc-footer-copy { font-size: 10px; color: #b0a090; letter-spacing: 1px; }
+  .rc-footer-links { display: flex; gap: 1.5rem; }
+  .rc-footer-link { font-size: 10px; color: #9c8570; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; }
+</style>
+
+<div class="rc">
+
+  <!-- NAV -->
+  <nav class="rc-nav">
+    <div class="rc-logo-wrap">
+      <div class="rc-logo-dot">
+        <svg width="18" height="12" viewBox="0 0 30 18"><text x="0" y="14" font-family="Georgia,serif" font-size="13" fill="#f0e6d3" font-style="italic">ru</text></svg>
+      </div>
+      <span class="rc-logo-text">ru.Cloud</span>
+    </div>
+    <div class="rc-nav-right">
+      <div class="rc-nav-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7a6248" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
+        Search
+      </div>
+      <div class="rc-nav-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7a6248" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Panier (0)
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="rc-hero">
+    <div class="rc-hero-bg-text">ru.Cloud</div>
+    <div class="rc-hero-inner">
+      <div class="rc-hero-eyebrow">Est. 2023 — Algeria</div>
+      <div class="rc-hero-title">Born from<br><em>the shadows,</em><br>dressed in light.</div>
+      <div class="rc-hero-sub">Luxury sustainable womenswear</div>
+      <button class="rc-hero-btn">Discover the collection</button>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <div class="rc-story">
+    <div class="rc-story-img">
+      <div class="rc-story-img-inner">
+        <div class="rc-story-img-circle">
+          <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="18" r="9" fill="none" stroke="#8a6a50" stroke-width="0.8"/><path d="M6 44c0-10 8-18 18-18s18 8 18 18" fill="none" stroke="#8a6a50" stroke-width="0.8"/></svg>
+        </div>
+        <div class="rc-story-img-label">Your photo here</div>
+      </div>
+    </div>
+    <div class="rc-story-text">
+      <div class="rc-story-eyebrow">The story behind ru.Cloud</div>
+      <div class="rc-story-title">"I didn't start a brand.<br>I found a way to survive."</div>
+      <div class="rc-story-divider"></div>
+      <div class="rc-story-body">
+        ru.Cloud was born in 2023 — not from a business plan, but from <span>pain, resilience, and an unshakeable belief</span> that beauty can be built from the darkest places.<br><br>
+        Every stitch carries a memory. Every silhouette, a chapter of a story that refused to end quietly. This brand is my voice — and now, it can be yours too.
+      </div>
+      <div class="rc-story-year">Founded 2023 · Made with intention · Algeria</div>
+    </div>
+  </div>
+
+  <!-- PALETTE -->
+  <div class="rc-palette-section">
+    <div class="rc-palette-label">The ru.Cloud palette</div>
+    <div class="rc-palette-row">
+      <div class="rc-palette-swatch">
+        <div class="rc-palette-color" style="background:#3b2a1f;"></div>
+        <div class="rc-palette-name">Espresso</div>
+        <div class="rc-palette-hex">#3B2A1F</div>
+      </div>
+      <div class="rc-palette-swatch">
+        <div class="rc-palette-color" style="background:#f0e6d3;border:0.5px solid rgba(0,0,0,0.06);"></div>
+        <div class="rc-palette-name">Ivory</div>
+        <div class="rc-palette-hex">#F0E6D3</div>
+      </div>
+      <div class="rc-palette-swatch">
+        <div class="rc-palette-color" style="background:#1a1008;"></div>
+        <div class="rc-palette-name">Noir</div>
+        <div class="rc-palette-hex">#1A1008</div>
+      </div>
+      <div class="rc-palette-swatch">
+        <div class="rc-palette-color" style="background:#8a9e7a;"></div>
+        <div class="rc-palette-name">Sage</div>
+        <div class="rc-palette-hex">#8A9E7A</div>
+      </div>
+      <div class="rc-palette-swatch">
+        <div class="rc-palette-color" style="background:#c4a0a8;"></div>
+        <div class="rc-palette-name">Mauve</div>
+        <div class="rc-palette-hex">#C4A0A8</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COLLECTION -->
+  <div class="rc-collection">
+    <div class="rc-collection-header">
+      <div class="rc-collection-eyebrow">The first drop</div>
+      <div class="rc-collection-title">Coming soon.</div>
+      <div class="rc-collection-sub">Each piece tells a part of the story</div>
+    </div>
+
+    <div class="rc-pieces-grid">
+      <div class="rc-piece-card">
+        <div class="rc-piece-tag">Coming Soon</div>
+        <div class="rc-piece-card-inner">
+          <div class="rc-piece-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#8a6a50" stroke-width="0.8"><path d="M9 4 Q14 2 19 4 L21 10 Q14 8 7 10 Z"/><rect x="6" y="9" width="16" height="18" rx="1"/></svg>
+          </div>
+          <div class="rc-piece-label">Piece No. 01</div>
+          <div class="rc-piece-soon">Upload your piece</div>
+        </div>
+      </div>
+      <div class="rc-piece-card" style="background:#eeebe6;">
+        <div class="rc-piece-tag" style="color:#c4a0a8;border-color:rgba(196,160,168,0.3);">Coming Soon</div>
+        <div class="rc-piece-card-inner">
+          <div class="rc-piece-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#c4a0a8" stroke-width="0.8"><ellipse cx="14" cy="11" rx="7" ry="8"/><rect x="10" y="18" width="8" height="10" rx="1"/></svg>
+          </div>
+          <div class="rc-piece-label">Piece No. 02</div>
+          <div class="rc-piece-soon">Upload your piece</div>
+        </div>
+      </div>
+      <div class="rc-piece-card" style="background:#e8ece5;">
+        <div class="rc-piece-tag" style="color:#8a9e7a;border-color:rgba(138,158,122,0.3);">Coming Soon</div>
+        <div class="rc-piece-card-inner">
+          <div class="rc-piece-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#8a9e7a" stroke-width="0.8"><path d="M7 6 Q14 3 21 6 L23 14 Q14 11 5 14 Z"/><rect x="5" y="13" width="18" height="14" rx="1"/></svg>
+          </div>
+          <div class="rc-piece-label">Piece No. 03</div>
+          <div class="rc-piece-soon">Upload your piece</div>
+        </div>
+      </div>
+      <div class="rc-piece-card" style="background:#e5e5e5;">
+        <div class="rc-piece-tag" style="color:#7a6248;border-color:rgba(122,98,72,0.25);">Coming Soon</div>
+        <div class="rc-piece-card-inner">
+          <div class="rc-piece-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="#7a6248" stroke-width="0.8"><path d="M8 3 L20 3 L22 8 L14 11 L6 8 Z"/><rect x="8" y="10" width="12" height="17" rx="1"/></svg>
+          </div>
+          <div class="rc-piece-label">Piece No. 04</div>
+          <div class="rc-piece-soon">Upload your piece</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rc-collection-cta">
+      <button class="rc-notify-btn">Be the first to know</button>
+      <button class="rc-notify-btn-alt">Follow the journey</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="rc-footer">
+    <div class="rc-footer-logo">ru.Cloud</div>
+    <div class="rc-footer-links">
+      <span class="rc-footer-link">Instagram</span>
+      <span class="rc-footer-link">Contact</span>
+    </div>
+    <div class="rc-footer-copy">© 2026 — Est. Algeria, 2023</div>
+  </div>
+
+</div>

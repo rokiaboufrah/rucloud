@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ru.Cloud</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .contact-container { padding: 6rem 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; max-width: 1200px; margin: 0 auto; }
+        .contact-info h2 { font-family: var(--font-serif); font-size: 36px; font-style: italic; margin-bottom: 2rem; }
+        .contact-info p { font-size: 14px; line-height: 2; color: #7a6550; margin-bottom: 3rem; }
+        
+        .contact-form { display: grid; gap: 2rem; }
+        .form-group { display: grid; gap: 0.5rem; }
+        .form-group label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--color-text); }
+        .form-group input, .form-group textarea { padding: 15px; border: 0.5px solid var(--color-border); font-family: var(--font-main); font-size: 13px; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--color-accent); }
+        
+        .submit-btn { padding: 20px; background: var(--color-espresso); color: white; text-transform: uppercase; letter-spacing: 3px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <nav class="rc-nav">
+        <div class="rc-logo-wrap">
+            <div class="rc-logo-dot"><svg width="18" height="12" viewBox="0 0 30 18"><text x="0" y="14" font-family="Georgia,serif" font-size="13" fill="#f0e6d3" font-style="italic">ru</text></svg></div>
+            <a href="../index.html" class="rc-logo-text">ru.Cloud</a>
+        </div>
+        <div class="rc-nav-right">
+            <a href="shop.html" class="rc-nav-icon">Shop</a>
+            <a href="cart.html" class="rc-nav-icon">Panier (0)</a>
+        </div>
+    </nav>
+
+    <main class="contact-container">
+        <div class="contact-info">
+            <h2>Get in touch</h2>
+            <p>Whether you have a question about our collection, your order, or just want to share your story, we'd love to hear from you.</p>
+            
+            <div class="contact-details">
+                <div style="margin-bottom: 2rem;">
+                    <h4 class="rc-footer-title">Email</h4>
+                    <p>hello@rucloud.dz</p>
+                </div>
+                <div>
+                    <h4 class="rc-footer-title">Studio</h4>
+                    <p>Algiers, Algeria<br>By appointment only.</p>
+                </div>
+            </div>
+        </div>
+
+        <form class="contact-form">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" placeholder="Your name">
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Your email address">
+            </div>
+            <div class="form-group">
+                <label>Message</label>
+                <textarea rows="5" placeholder="How can we help?"></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </main>
+
+    <footer class="rc-footer">
+        <div class="rc-footer-bottom">
+            <div class="rc-footer-copy">© 2026 ru.Cloud.</div>
+        </div>
+    </footer>
+</body>
+</html>

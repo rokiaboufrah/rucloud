@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Palette | ru.Cloud</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .palette-grid { padding: 6rem 3rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2px; background: var(--color-border); }
+        .palette-item { background: white; padding: 4rem 2rem; text-align: center; }
+        .color-circle { width: 120px; height: 120px; border-radius: 50%; margin: 0 auto 2rem; }
+        .color-name { font-family: var(--font-serif); font-size: 24px; font-style: italic; margin-bottom: 0.5rem; }
+        .color-hex { font-size: 11px; letter-spacing: 2px; color: #9c8570; }
+        .color-desc { font-size: 12px; line-height: 1.8; color: #7a6550; margin-top: 1.5rem; max-width: 200px; margin-left: auto; margin-right: auto; }
+    </style>
+</head>
+<body>
+    <nav class="rc-nav">
+        <div class="rc-logo-wrap">
+            <div class="rc-logo-dot"><svg width="18" height="12" viewBox="0 0 30 18"><text x="0" y="14" font-family="Georgia,serif" font-size="13" fill="#f0e6d3" font-style="italic">ru</text></svg></div>
+            <a href="../index.html" class="rc-logo-text">ru.Cloud</a>
+        </div>
+        <div class="rc-nav-links">
+            <a href="shop.html" class="rc-nav-link">Shop</a>
+            <a href="about.html" class="rc-nav-link">Story</a>
+            <a href="palette.html" class="rc-nav-link" style="color: var(--color-accent);">Palette</a>
+        </div>
+        <div class="rc-nav-right">
+            <a href="cart.html" class="rc-nav-icon">Panier (0)</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="page-eyebrow">The ru.Cloud DNA</div>
+        <h1 class="page-title">Our Color Palette</h1>
+    </header>
+
+    <main class="palette-grid">
+        <div class="palette-item">
+            <div class="color-circle" style="background: #3B2A1F;"></div>
+            <h3 class="color-name">Espresso</h3>
+            <p class="color-hex">#3B2A1F</p>
+            <p class="color-desc">Deep, grounded, and timeless. The foundation of our resilience.</p>
+        </div>
+        <div class="palette-item">
+            <div class="color-circle" style="background: #F0E6D3; border: 0.5px solid #eee;"></div>
+            <h3 class="color-name">Ivory</h3>
+            <p class="color-hex">#F0E6D3</p>
+            <p class="color-desc">Pure light and new beginnings. A breath of fresh air.</p>
+        </div>
+        <div class="palette-item">
+            <div class="color-circle" style="background: #1A1008;"></div>
+            <h3 class="color-name">Noir</h3>
+            <p class="color-hex">#1A1008</p>
+            <p class="color-desc">The shadow from which we were born. Elegant and powerful.</p>
+        </div>
+        <div class="palette-item">
+            <div class="color-circle" style="background: #8A9E7A;"></div>
+            <h3 class="color-name">Sage</h3>
+            <p class="color-hex">#8A9E7A</p>
+            <p class="color-desc">Healing and growth. A connection to nature and peace.</p>
+        </div>
+        <div class="palette-item">
+            <div class="color-circle" style="background: #C4A0A8;"></div>
+            <h3 class="color-name">Mauve</h3>
+            <p class="color-hex">#C4A0A8</p>
+            <p class="color-desc">Softness in strength. The delicate touch of a story told.</p>
+        </div>
+    </main>
+
+    <footer class="rc-footer">
+        <div class="rc-footer-bottom">
+            <div class="rc-footer-copy">© 2026 ru.Cloud.</div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,108 @@
+/* GLOBAL STYLES & DESIGN SYSTEM */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap');
+
+:root {
+    --color-bg: #ffffff;
+    --color-text: #2a1f14;
+    --color-accent: #8a6a50;
+    --color-sage: #8a9e7a;
+    --color-espresso: #3b2a1f;
+    --color-ivory: #f0e6d3;
+    --color-noir: #1a1008;
+    --color-mauve: #c4a0a8;
+    --color-border: rgba(42, 31, 20, 0.1);
+    --color-footer-bg: #ebebeb;
+    
+    --font-main: 'Montserrat', sans-serif;
+    --font-serif: 'Cormorant Garamond', serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-main);
+    background: var(--color-bg);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: all 0.3s; }
+ul { list-style: none; }
+button { cursor: pointer; border: none; background: none; font-family: var(--font-main); transition: all 0.3s; }
+
+/* SHARED COMPONENTS */
+
+/* Navigation */
+.rc-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 3rem;
+    border-bottom: 0.5px solid var(--color-border);
+    position: sticky; top: 0; background: #ffffff; z-index: 100;
+}
+.rc-logo-wrap { display: flex; align-items: center; gap: 10px; }
+.rc-logo-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--color-espresso); display: flex; align-items: center; justify-content: center; }
+.rc-logo-text { font-family: var(--font-serif); font-size: 21px; font-weight: 300; letter-spacing: 2px; color: var(--color-text); }
+
+.rc-nav-links { display: flex; gap: 1.5rem; }
+.rc-nav-link { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #7a6248; }
+.rc-nav-link:hover { color: var(--color-accent); }
+
+.rc-nav-right { display: flex; align-items: center; gap: 2rem; }
+.rc-nav-icon { display: flex; align-items: center; gap: 6px; color: #7a6248; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+
+/* Buttons */
+.btn-primary {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--color-text); border: 0.5px solid rgba(42,31,20,0.4);
+    padding: 15px 40px; background: transparent;
+}
+.btn-primary:hover { background: rgba(42,31,20,0.05); }
+
+.btn-outline {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--color-sage); border: 0.5px solid rgba(138,158,122,0.35);
+    padding: 16px 48px; background: transparent;
+}
+.btn-outline:hover { background: rgba(138,158,122,0.05); }
+
+/* Footer */
+.rc-footer {
+    padding: 4rem 3rem 2rem;
+    background: var(--color-footer-bg);
+    border-top: 0.5px solid var(--color-border);
+}
+.rc-footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+    margin-bottom: 4rem;
+}
+.rc-footer-brand .rc-logo-text { font-size: 24px; margin-bottom: 1rem; display: block; }
+.rc-footer-brand p { font-size: 12px; color: #7a6550; max-width: 300px; line-height: 2; }
+.rc-footer-title { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: var(--color-text); margin-bottom: 1.5rem; font-weight: 500; }
+.rc-footer-list li { margin-bottom: 0.8rem; }
+.rc-footer-list a { font-size: 11px; color: #7a6550; letter-spacing: 1px; }
+.rc-footer-list a:hover { color: var(--color-accent); }
+
+.rc-footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 2rem; border-top: 0.5px solid rgba(42,31,20,0.05);
+}
+.rc-footer-copy { font-size: 10px; color: #b0a090; letter-spacing: 1px; }
+.rc-footer-socials { display: flex; gap: 1.5rem; }
+
+/* Page Header */
+.page-header {
+    padding: 6rem 3rem 4rem;
+    text-align: center;
+    background: #f9f9f9;
+}
+.page-eyebrow { font-size: 10px; letter-spacing: 5px; color: var(--color-sage); text-transform: uppercase; margin-bottom: 1.5rem; }
+.page-title { font-family: var(--font-serif); font-size: 48px; font-weight: 300; font-style: italic; color: var(--color-espresso); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rc-nav { padding: 1rem 1.5rem; }
+    .rc-nav-links { display: none; }
+    .rc-footer-grid { grid-template-columns: 1fr 1fr; }
+    .rc-story { grid-template-columns: 1fr; }
+}
