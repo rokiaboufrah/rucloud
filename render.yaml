@@ -25,6 +25,7 @@ services:
 
   - type: static
     name: rucloud-frontend
+    rootDir: frontend
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
