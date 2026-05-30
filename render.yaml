@@ -25,7 +25,6 @@ services:
   - type: web
     name: rucloud-frontend
     runtime: static
-    region: frankfurt
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
