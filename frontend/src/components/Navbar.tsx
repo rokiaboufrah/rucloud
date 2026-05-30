@@ -17,7 +17,8 @@ export default function Navbar() {
   const textColor = scrolled ? 'var(--color-text-muted)' : 'rgba(255,255,255,0.92)'
   const logoColor = scrolled ? 'var(--color-text)' : '#fff'
 
-  const navItems = [
+  type MegaItem = { title: string; links: { label: string; path: string }[] }
+  const navItems: { label: string; path: string; mega: MegaItem[] }[] = [
     {
       label: t('nav.shop'),
       path: '/shop',
@@ -43,9 +44,9 @@ export default function Navbar() {
         ]},
       ],
     },
-    { label: t('nav.the_collection'), path: '/shop?featured=true', mega: [] as any },
-    { label: t('nav.our_story'), path: '/story', mega: [] as any },
-    { label: t('nav.contact'), path: '/contact', mega: [] as any },
+    { label: t('nav.the_collection'), path: '/shop?featured=true', mega: [] },
+    { label: t('nav.our_story'), path: '/story', mega: [] },
+    { label: t('nav.contact'), path: '/contact', mega: [] },
   ]
 
   return (

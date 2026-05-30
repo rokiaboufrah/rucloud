@@ -41,7 +41,6 @@ export default function ProductDetail() {
   }
 
   const images = product.images
-  const hasMultipleSizes = product.sizes.length > 1
 
   return (
     <div>
