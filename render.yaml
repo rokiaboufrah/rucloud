@@ -22,9 +22,8 @@ services:
           name: rucloud-db
           property: connectionString
 
-  - type: web
+  - type: static
     name: rucloud-frontend
-    runtime: static
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
