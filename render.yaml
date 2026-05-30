@@ -13,24 +13,15 @@ services:
       - key: DJANGO_DEBUG
         value: False
       - key: DJANGO_ALLOWED_HOSTS
-        value: .onrender.com,rucloud.com
+        value: .onrender.com
       - key: CORS_ALLOWED_ORIGINS
-        value: https://rucloud.onrender.com,https://rucloud.com
+        value: https://rucloud-api.onrender.com
       - key: CSRF_TRUSTED_ORIGINS
-        value: https://rucloud.onrender.com,https://rucloud.com
+        value: https://rucloud-api.onrender.com
       - key: DATABASE_URL
         fromDatabase:
           name: rucloud-db
           property: connectionString
-
-  - type: static
-    name: rucloud-frontend
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    staticPublishPath: dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://rucloud-api.onrender.com
 
 databases:
   - name: rucloud-db
