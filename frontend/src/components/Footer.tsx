@@ -29,33 +29,35 @@ export default function Footer() {
         {/* Shop */}
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.shop_title')}</h4>
-          {['All', 'Abayas', 'Sets', 'Dresses', 'Scarves'].map(item => (
-            <Link key={item} to="/shop" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item}</Link>
+          {[{ label: 'All', cat: '' }, { label: 'Abayas', cat: 'abayas' }, { label: 'Sets', cat: 'sets' }, { label: 'Dresses', cat: 'dresses' }, { label: 'Scarves', cat: 'scarves' }].map(item => (
+            <Link key={item.label} to={item.cat ? `/shop?category=${item.cat}` : '/shop'} style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item.label}</Link>
           ))}
         </div>
 
         {/* About */}
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.about_title')}</h4>
-          {[t('footer.our_story'), t('footer.lookbook'), t('footer.journal'), t('footer.color_palette')].map(item => (
-            <Link key={item} to="/" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item}</Link>
-          ))}
+          <Link to="/story" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.our_story')}</Link>
+          <Link to="/shop" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.lookbook')}</Link>
+          <Link to="/" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.journal')}</Link>
+          <Link to="/" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.color_palette')}</Link>
         </div>
 
-        {/* Support */}
+        {/* Contact */}
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.support_title')}</h4>
-          {[t('footer.contact'), t('footer.shipping'), t('footer.returns'), t('footer.faq')].map(item => (
-            <Link key={item} to="/contact" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item}</Link>
-          ))}
+          <Link to="/contact" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.contact')}</Link>
+          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.shipping')}</span>
+          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.returns')}</span>
+          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.faq')}</span>
         </div>
 
         {/* Social */}
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.follow_title')}</h4>
-          {['Instagram', 'Pinterest', 'TikTok'].map(item => (
-            <a key={item} href="#" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item}</a>
-          ))}
+          <a href="https://instagram.com/rucloud" target="_blank" rel="noopener noreferrer" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>Instagram</a>
+          <a href="https://pinterest.com/rucloud" target="_blank" rel="noopener noreferrer" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>Pinterest</a>
+          <a href="https://tiktok.com/@rucloud" target="_blank" rel="noopener noreferrer" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>TikTok</a>
         </div>
       </div>
 

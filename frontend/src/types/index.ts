@@ -83,12 +83,32 @@ export interface Order {
   phone: string
   address: string
   city: string
+  wilaya_code: number
+  delivery_type: string
+  shipping_cost: string
   country: string
   status: string
+  payment_method: string
+  payment_status: string
+  ccp_ref: string
+  payment_receipt: string | null
   total: string
   notes: string
   items: OrderItem[]
   created_at: string
+}
+
+export interface BaridiMobConfig {
+  phone: string
+  name: string
+}
+
+export interface CCPConfig {
+  account_holder: string
+  account_number: string
+  cle: string
+  bank: string
+  address: string
 }
 
 export interface OrderItem {

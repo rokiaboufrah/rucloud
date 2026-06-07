@@ -139,6 +139,16 @@ CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173').split(',')
 
+# Payment Configuration
+BARIDIMOB_PHONE = os.environ.get('BARIDIMOB_PHONE', '00799999000219856332')
+BARIDIMOB_NAME = os.environ.get('BARIDIMOB_NAME', 'BECHLEM SOUMEYA')
+
+CCP_ACCOUNT_HOLDER = os.environ.get('CCP_ACCOUNT_HOLDER', 'BECHLEM SOUMEYA')
+CCP_ACCOUNT_NUMBER = os.environ.get('CCP_ACCOUNT_NUMBER', '007999990002198563')
+CCP_CLE = os.environ.get('CCP_CLE', '32')
+CCP_BANK = os.environ.get('CCP_BANK', 'Algérie Poste')
+CCP_ADDRESS = os.environ.get('CCP_ADDRESS', 'Constantine Ali Mendjeli')
+
 # Django REST Framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

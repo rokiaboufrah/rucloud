@@ -6,4 +6,15 @@ const api = axios.create({
   withCredentials: true,
 })
 
+api.interceptors.request.use(config => {
+  const csrfCookie = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('csrftoken='))
+  if (csrfCookie) {
+    const token = csrfCookie.split('=')[1]
+    config.headers['X-CSRFToken'] = token
+  }
+  return config
+})
+
 export default api

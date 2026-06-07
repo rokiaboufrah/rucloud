@@ -13,6 +13,7 @@ export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
   const [added, setAdded] = useState(false)
+  const [addError, setAddError] = useState('')
   const [openTab, setOpenTab] = useState<string | null>(null)
 
   useEffect(() => {
@@ -26,11 +27,16 @@ export default function ProductDetail() {
 
   const handleAddToCart = async () => {
     if (!product) return
+    setAddError('')
     try {
       await cartService.add(product.id, selectedSize || undefined)
       setAdded(true)
+      window.dispatchEvent(new CustomEvent('cart-updated'))
       setTimeout(() => setAdded(false), 2500)
-    } catch (e) { console.error(e) }
+    } catch (e: any) {
+      setAddError(e?.response?.data?.error || 'Failed to add to cart')
+      setTimeout(() => setAddError(''), 3000)
+    }
   }
 
   if (loading) {
@@ -126,12 +132,13 @@ export default function ProductDetail() {
           )}
 
           <button onClick={handleAddToCart} className="btn-dark" style={{
-            width: '100%', padding: '18px 40px', marginBottom: '2.5rem',
+            width: '100%', padding: '18px 40px', marginBottom: '0.5rem',
             background: added ? 'var(--color-sage)' : 'var(--color-espresso)',
             fontSize: '0.75rem', letterSpacing: '3px',
           }}>
             {added ? t('product.added') : t('product.add_to_bag')}
           </button>
+          {addError && <p style={{ color: '#dc2626', fontSize: '0.75rem', textAlign: 'center', marginBottom: '0.5rem' }}>{addError}</p>}
 
           {/* ─── ACCORDION ─── */}
           <div style={{ borderTop: '1px solid var(--color-border)' }}>

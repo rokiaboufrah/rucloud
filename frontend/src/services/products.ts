@@ -11,7 +11,7 @@ export const productsService = {
   getCategories() {
     return api.get<Category[]>('/products/categories/').then(r => r.data)
   },
-  list(params?: { category?: string; collection?: string; featured?: string }) {
+  list(params?: { category?: string; collection?: string; featured?: string; q?: string }) {
     return api.get<Product[]>('/products/', { params }).then(r => r.data)
   },
   get(slug: string) {

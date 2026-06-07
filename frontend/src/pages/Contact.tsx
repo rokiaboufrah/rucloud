@@ -6,7 +6,7 @@ export default function Contact() {
   const { t } = useTranslation()
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState('')
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,11 +33,7 @@ export default function Contact() {
           </p>
           <div style={{ marginBottom: '2rem' }}>
             <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.5rem', color: 'var(--color-espresso)' }}>{t('contact.info_email')}</h4>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>hello@rucloud.dz</p>
-          </div>
-          <div>
-            <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.5rem', color: 'var(--color-espresso)' }}>Studio</h4>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>Algiers, Algeria<br />By appointment only.</p>
+            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>rucloudz@gmail.com</p>
           </div>
         </div>
 
@@ -59,6 +55,11 @@ export default function Contact() {
                 <label style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text)', marginBottom: '0.5rem' }}>{t('contact.email_label')}</label>
                 <input type="email" required value={form.email} onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
                   style={{ width: '100%', padding: '12px 15px', border: '0.5px solid var(--color-border)', fontFamily: 'var(--font-sans)', fontSize: '0.8rem' }} placeholder={t('contact.email_placeholder')} />
+              </div>
+              <div>
+                <label style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text)', marginBottom: '0.5rem' }}>{t('contact.subject_label')}</label>
+                <input required value={form.subject} onChange={e => setForm(f => ({ ...f, subject: e.target.value }))}
+                  style={{ width: '100%', padding: '12px 15px', border: '0.5px solid var(--color-border)', fontFamily: 'var(--font-sans)', fontSize: '0.8rem' }} placeholder={t('contact.subject_placeholder')} />
               </div>
               <div>
                 <label style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', color: 'var(--color-text)', marginBottom: '0.5rem' }}>{t('contact.message_label')}</label>

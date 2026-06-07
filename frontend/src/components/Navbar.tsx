@@ -1,12 +1,45 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useRef } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from './LanguageSwitcher'
+import { cartService } from '../services/cart'
 
 export default function Navbar() {
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [activeMega, setActiveMega] = useState<number | null>(null)
   const [scrolled, setScrolled] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [cartCount, setCartCount] = useState(0)
+  const searchInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [searchOpen])
+
+  const fetchCartCount = () => {
+    cartService.get().then(c => setCartCount(c.item_count)).catch(() => setCartCount(0))
+  }
+
+  useEffect(() => { fetchCartCount() }, [location.pathname])
+
+  useEffect(() => {
+    window.addEventListener('cart-updated', fetchCartCount)
+    return () => window.removeEventListener('cart-updated', fetchCartCount)
+  }, [])
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      navigate(`/shop?q=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchOpen(false)
+      setSearchQuery('')
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 80)
@@ -31,20 +64,12 @@ export default function Navbar() {
           { label: t('nav.mega.tops'), path: '/shop?category=tops' },
           { label: t('nav.mega.pants'), path: '/shop?category=pants' },
         ]},
-        { title: t('nav.mega.scarves'), links: [
-          { label: t('nav.mega.all_scarves'), path: '/shop?category=scarves' },
-          { label: t('nav.mega.premium_jersey'), path: '/shop?category=scarves' },
-          { label: t('nav.mega.bamboo_jersey'), path: '/shop?category=scarves' },
-          { label: t('nav.mega.silk'), path: '/shop?category=scarves' },
-        ]},
         { title: t('nav.mega.accessories'), links: [
-          { label: t('nav.mega.bags'), path: '/shop?category=accessories' },
-          { label: t('nav.mega.hijab_pins'), path: '/shop?category=accessories' },
-          { label: t('nav.mega.gift_cards'), path: '/shop' },
+          { label: t('nav.mega.crochet_squin_hat'), path: '/shop?category=accessories' },
         ]},
       ],
     },
-    { label: t('nav.the_collection'), path: '/shop?featured=true', mega: [] },
+    { label: t('nav.the_collection'), path: '/shop', mega: [] },
     { label: t('nav.our_story'), path: '/story', mega: [] },
     { label: t('nav.contact'), path: '/contact', mega: [] },
   ]
@@ -123,13 +148,15 @@ export default function Navbar() {
         {/* Right icons */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <LanguageSwitcher />
-          <button style={{
-            fontSize: '0.68rem', letterSpacing: '2px', color: textColor,
-            transition: 'color 0.3s, opacity 0.3s', opacity: 0.85,
-            textTransform: 'uppercase',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
-          onMouseLeave={e => { e.currentTarget.style.opacity = '0.85' }}
+          <button
+            onClick={() => setSearchOpen(true)}
+            style={{
+              fontSize: '0.68rem', letterSpacing: '2px', color: textColor,
+              transition: 'color 0.3s, opacity 0.3s', opacity: 0.85,
+              textTransform: 'uppercase',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '0.85' }}
           >
             {t('nav.search')}
           </button>
@@ -152,10 +179,62 @@ export default function Navbar() {
           onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '0.85' }}
           >
-            {t('nav.bag', { count: 0 })}
+            {t('nav.bag', { count: cartCount })}
           </Link>
         </div>
       </div>
+
+      {/* Search overlay */}
+      {searchOpen && (
+        <div
+          onClick={() => setSearchOpen(false)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 200,
+            background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)',
+            display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
+            paddingTop: '15vh',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: scrolled ? '#fff' : 'rgba(255,255,255,0.97)',
+              padding: '2.5rem', width: '100%', maxWidth: '600px',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+            }}
+          >
+            <form onSubmit={handleSearchSubmit} style={{ display: 'flex', gap: '0', borderBottom: '1px solid var(--color-border)' }}>
+              <input
+                ref={searchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder={t('nav.search')}
+                style={{
+                  flex: 1, border: 'none', outline: 'none', padding: '14px 0',
+                  fontFamily: 'var(--font-serif)', fontSize: '1.2rem', fontStyle: 'italic',
+                  background: 'transparent', color: 'var(--color-espresso)',
+                }}
+              />
+              <button type="submit" style={{
+                border: 'none', background: 'transparent',
+                fontFamily: 'var(--font-sans)', fontSize: '0.7rem',
+                letterSpacing: '3px', textTransform: 'uppercase',
+                color: 'var(--color-text-muted)', cursor: 'pointer',
+                padding: '14px 0 14px 20px',
+              }}>
+                Search
+              </button>
+            </form>
+            <p style={{
+              fontSize: '0.65rem', color: 'var(--color-text-muted)',
+              marginTop: '1rem', letterSpacing: '1px',
+            }}>
+              Search by product name or description
+            </p>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

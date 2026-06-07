@@ -11,6 +11,8 @@ export default function Shop() {
   const categoryLabels = [t('shop.filter_all'), 'Abayas', 'Sets', 'Dresses', 'Tops', 'Pants', 'Scarves', 'Accessories']
   const [searchParams] = useSearchParams()
   const activeCategory = searchParams.get('category') || 'all'
+  const searchQuery = searchParams.get('q') || ''
+  const featured = searchParams.get('featured') || ''
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -18,14 +20,16 @@ export default function Shop() {
     setLoading(true)
     const params: any = {}
     if (activeCategory !== 'all') params.category = activeCategory
+    if (searchQuery) params.q = searchQuery
+    if (featured) params.featured = featured
     productsService.list(params).then(setProducts).finally(() => setLoading(false))
-  }, [activeCategory])
+  }, [activeCategory, searchQuery, featured])
 
   return (
     <div>
       <header className="page-header">
-        <div className="page-eyebrow">The Collection</div>
-        <h1 className="page-title">{t('shop.title')}</h1>
+        <div className="page-eyebrow">{searchQuery ? `Search results for "${searchQuery}"` : 'The Collection'}</div>
+        <h1 className="page-title">{searchQuery ? `"${searchQuery}"` : t('shop.title')}</h1>
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '3rem', padding: '3rem 2rem', maxWidth: 'var(--max-width)', margin: '0 auto' }}>

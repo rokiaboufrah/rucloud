@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { productsService } from '../services/products';
+import { newsletterService } from '../services/newsletter';
 import type { Product } from '../types';
 
 const colors = [
@@ -18,6 +19,8 @@ export default function Home() {
   const imgRef = useRef<HTMLImageElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [featuredProducts, setFeaturedProducts] = useState<Product[]>([])
+  const [email, setEmail] = useState('')
+  const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     productsService.list({ featured: 'true' }).then(setFeaturedProducts).catch(() => {})
@@ -55,29 +58,6 @@ export default function Home() {
           <Link to="/shop" className="hero-cta" style={styles.heroCta}>
             {t('home.hero_cta')}
           </Link>
-        </div>
-      </section>
-
-      {/* ────────────── SIGNATURE PIECES ────────────── */}
-      <section style={styles.section}>
-        <div className="container">
-          <div style={styles.sectionHeader}>
-            <p className="section-subtitle">The Icons</p>
-            <h2 className="section-title">Signature Pieces</h2>
-          </div>
-          <div style={styles.signatureGrid}>
-            {['01', '02', '03', '04'].map((num) => (
-              <div key={num} style={styles.signatureCard}>
-                <div style={styles.signatureImage}>
-                  <span style={styles.comingSoon}>Coming Soon</span>
-                </div>
-                <div style={styles.signatureMeta}>
-                  <span style={styles.signatureNum}>Piece No. {num}</span>
-                  <span style={styles.signatureLabel}>Debut Collection</span>
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -170,16 +150,35 @@ export default function Home() {
             <h2 style={{ ...styles.newsletterTitle, fontFamily: 'var(--font-serif)', fontWeight: 300 }}>
               {t('home.newsletter_title')}
             </h2>
-            <form style={styles.newsletterForm} onSubmit={(e) => e.preventDefault()}>
+            {newsletterStatus === 'success' ? (
+              <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.85rem' }}>{t('contact.success')}</p>
+            ) : (
+            <form style={styles.newsletterForm} onSubmit={async (e) => {
+              e.preventDefault()
+              if (!email) return
+              try {
+                await newsletterService.subscribe(email)
+                setNewsletterStatus('success')
+                setEmail('')
+              } catch {
+                setNewsletterStatus('error')
+              }
+            }}>
               <input
                 type="email"
                 placeholder={t('home.newsletter_placeholder')}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
                 style={styles.newsletterInput}
               />
               <button type="submit" style={styles.newsletterBtn}>
                 {t('home.newsletter_cta')}
               </button>
             </form>
+            )}
+            {newsletterStatus === 'error' && (
+              <p style={{ color: '#ef4444', fontSize: '0.75rem' }}>{t('contact.error')}</p>
+            )}
           </div>
         </div>
       </section>
@@ -294,60 +293,6 @@ const styles: Record<string, React.CSSProperties> = {
   sectionHeader: {
     textAlign: 'center',
     marginBottom: '4rem',
-  },
-
-  /* ── SIGNATURE PIECES ── */
-  signatureGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, 1fr)',
-    gap: '1.5rem',
-  },
-  signatureCard: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '1rem',
-  },
-  signatureImage: {
-    position: 'relative',
-    width: '100%',
-    paddingBottom: '125%',
-    background: 'var(--color-bg-warm)',
-    border: '0.5px solid var(--color-border)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  comingSoon: {
-    position: 'absolute',
-    top: '1rem',
-    left: '1rem',
-    fontFamily: 'var(--font-sans)',
-    fontSize: '0.6rem',
-    letterSpacing: '2px',
-    textTransform: 'uppercase',
-    color: 'var(--color-text-muted)',
-    border: '0.5px solid var(--color-border)',
-    padding: '4px 10px',
-    background: 'rgba(255,255,255,0.8)',
-  },
-  signatureMeta: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '0.25rem',
-  },
-  signatureNum: {
-    fontFamily: 'var(--font-serif)',
-    fontSize: '1rem',
-    fontStyle: 'italic',
-    color: 'var(--color-espresso)',
-  },
-  signatureLabel: {
-    fontFamily: 'var(--font-sans)',
-    fontSize: '0.65rem',
-    letterSpacing: '2px',
-    textTransform: 'uppercase',
-    color: 'var(--color-text-muted)',
   },
 
   /* ── PRODUCT GRID ── */

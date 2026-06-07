@@ -27,6 +27,9 @@ class ProductListView(generics.ListAPIView):
         category = self.request.query_params.get('category')
         collection = self.request.query_params.get('collection')
         featured = self.request.query_params.get('featured')
+        q = self.request.query_params.get('q')
+        if q:
+            queryset = queryset.filter(name__icontains=q) | queryset.filter(description__icontains=q)
         if category:
             queryset = queryset.filter(category__slug=category)
         if collection:
