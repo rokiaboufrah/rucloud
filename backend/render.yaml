@@ -2,6 +2,7 @@ services:
   - type: web
     name: rucloud-api
     runtime: python
+    sourceDir: backend
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
     startCommand: gunicorn config.wsgi --workers=4 --max-requests=1200 --timeout=30
     envVars:
