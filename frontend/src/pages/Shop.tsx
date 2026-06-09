@@ -22,7 +22,7 @@ export default function Shop() {
     if (activeCategory !== 'all') params.category = activeCategory
     if (searchQuery) params.q = searchQuery
     if (featured) params.featured = featured
-    productsService.list(params).then(setProducts).finally(() => setLoading(false))
+    productsService.list(params).then(setProducts).catch(() => setProducts([])).finally(() => setLoading(false))
   }, [activeCategory, searchQuery, featured])
 
   return (
@@ -57,7 +57,7 @@ export default function Shop() {
             <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '4rem 0' }}>{t('shop.no_products')}</p>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-              {products.map(p => (
+              {(products || []).map(p => (
                 <Link key={p.slug} to={`/product/${p.slug}`} className="product-card" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
                   <div style={{ aspectRatio: '3/4', background: '#f5f5f5', marginBottom: '1rem', overflow: 'hidden', position: 'relative' }}>
                     {p.primary_image ? (

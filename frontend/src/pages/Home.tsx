@@ -23,7 +23,7 @@ export default function Home() {
   const [newsletterStatus, setNewsletterStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
-    productsService.list({ featured: 'true' }).then(setFeaturedProducts).catch(() => {})
+    productsService.list({ featured: 'true' }).then(setFeaturedProducts).catch(() => setFeaturedProducts([]))
   }, [])
 
   useEffect(() => {
@@ -69,7 +69,7 @@ export default function Home() {
             <h2 className="section-title">{t('home.featured_title')}</h2>
           </div>
           <div style={styles.productGrid}>
-            {(featuredProducts.length > 0 ? featuredProducts : []).map(p => (
+            {(Array.isArray(featuredProducts) ? featuredProducts : []).map(p => (
               <Link to={`/product/${p.slug}`} key={p.slug} style={styles.productCard} className="product-card">
                 <div style={styles.productImage}>
                   {p.primary_image ? (

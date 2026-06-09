@@ -30,7 +30,7 @@ export default function Cart() {
 
   useEffect(() => {
     setLoading(true)
-    cartService.get().then(setCart).finally(() => setLoading(false))
+    cartService.get().then(setCart).catch(() => setCart(null)).finally(() => setLoading(false))
   }, [])
 
   const handleRemove = async (itemId: number) => {
@@ -66,7 +66,7 @@ export default function Cart() {
         ) : (
           <>
             <div style={{ borderTop: '0.5px solid var(--color-border)' }}>
-              {cart.items.map(item => (
+              {(cart?.items || []).map(item => (
                 <div key={item.id} style={{ display: 'grid', gridTemplateColumns: '120px 1fr auto', gap: '2rem', padding: '2rem 0', borderBottom: '0.5px solid var(--color-border)' }}>
                   <div style={{ aspectRatio: '3/4', background: '#f5f5f5', overflow: 'hidden' }}>
                     {item.product_detail?.primary_image && (

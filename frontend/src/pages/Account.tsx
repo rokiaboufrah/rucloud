@@ -126,7 +126,7 @@ function LoggedInView({ user, onLogout }: { user: User; onLogout: () => void }) 
   useEffect(() => {
     Promise.all([
       cartService.get().then(setCart).catch(() => setCart(null)),
-      ordersService.list().then(setOrders).catch(() => setOrders([])),
+      ordersService.list().then(r => setOrders(Array.isArray(r) ? r : [])).catch(() => setOrders([])),
       ordersService.getPaymentConfig().then(c => { setCcpConfig(c.ccp); setBaridiConfig(c.baridimob) }).catch(() => {}),
     ]).finally(() => setCartLoading(false))
   }, [])
@@ -510,7 +510,7 @@ function OrderHistory({ orders }: { orders: Order[] }) {
         <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>{t('account.no_orders')}</p>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-          {orders.map(o => (
+          {(orders || []).map(o => (
             <div key={o.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem', background: '#faf8f5' }}>
               <div>
                 <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontStyle: 'italic' }}>

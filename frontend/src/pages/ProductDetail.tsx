@@ -21,7 +21,7 @@ export default function ProductDetail() {
     setLoading(true); setOpenTab(null)
     productsService.get(slug).then(p => {
       setProduct(p)
-      if (p.sizes.length > 0) setSelectedSize(p.sizes[0].id)
+      if (Array.isArray(p.sizes) && p.sizes.length > 0) setSelectedSize(p.sizes[0].id)
     }).finally(() => setLoading(false))
   }, [slug])
 
@@ -46,7 +46,7 @@ export default function ProductDetail() {
     return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>{t('product.not_found')}</div>
   }
 
-  const images = product.images
+  const images = Array.isArray(product.images) ? product.images : []
 
   return (
     <div>
@@ -87,7 +87,7 @@ export default function ProductDetail() {
             {t('product.regular_price', { price: parseFloat(product.price).toLocaleString() })}
           </p>
 
-          {product.sizes.length > 0 && (
+          {Array.isArray(product.sizes) && product.sizes.length > 0 && (
             <div style={{ marginBottom: '1.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
                 <span style={{ fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 500 }}>{t('product.size')}</span>
@@ -110,7 +110,7 @@ export default function ProductDetail() {
             </div>
           )}
 
-          {product.colors.length > 0 && (
+          {Array.isArray(product.colors) && product.colors.length > 0 && (
             <div style={{ marginBottom: '1.5rem' }}>
               <p style={{ fontSize: '0.7rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.8rem', fontWeight: 500 }}>
                 {t('product.colour')} — <span style={{ fontWeight: 400, textTransform: 'none' }}>{product.colors.find(c => c.id === selectedColor)?.name || t('product.select')}</span>
