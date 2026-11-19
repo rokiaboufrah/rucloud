@@ -84,10 +84,11 @@ product/cart/checkout request silently fails. After setting it, redeploy.
 1. Render Dashboard → **New → Blueprint** → connect `https://github.com/rokiaboufrah/rucloud.git` on branch `main`.
 2. Render reads `render.yaml` and creates the `rucloud-api` web service plus the `rucloud-db` free Postgres database.
 3. Fill in the environment variables from the table above in the service settings.
-4. The build runs `pip install -r requirements.txt && collectstatic --noinput`, and the
-   **pre-deploy command** in `render.yaml` runs `migrate --noinput` plus the idempotent
-   `load_catalog` fixture import. (The root `Procfile` is kept for Heroku-style hosts;
-   Render uses `preDeployCommand`.)
+4. The build runs `backend/build.sh`: `pip install`, `collectstatic`, `migrate --noinput`
+   and the idempotent `load_catalog` fixture import. Migrations deliberately live in the
+   **build script**, not in `preDeployCommand`, because Render only allows
+   `preDeployCommand` on paid instance types. The root `Procfile` is kept for
+   Heroku-style hosts.
 5. To create a staff account, open the Render **Shell** for the service and run:
 
    ```bash

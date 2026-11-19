@@ -4,7 +4,6 @@ services:
     runtime: python
     healthCheckPath: /api/health/
     buildCommand: bash build.sh
-    preDeployCommand: cd backend && python manage.py migrate --noinput && python manage.py load_catalog
     startCommand: cd backend && gunicorn config.wsgi:application --workers=4 --max-requests=1200 --timeout=30
     envVars:
       - key: DATABASE_URL
