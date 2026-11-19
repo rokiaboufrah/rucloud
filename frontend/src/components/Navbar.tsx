@@ -179,7 +179,7 @@ export default function Navbar() {
           onMouseEnter={e => { e.currentTarget.style.opacity = '1' }}
           onMouseLeave={e => { e.currentTarget.style.opacity = '0.85' }}
           >
-            {t('nav.bag', { count: cartCount })}
+            {t('nav.bag', { qty: cartCount })}
           </Link>
         </div>
       </div>

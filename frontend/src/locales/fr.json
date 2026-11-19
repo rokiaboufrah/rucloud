@@ -14,7 +14,7 @@
     "search": "Rechercher",
     "search_hint": "Recherchez par nom ou description de produit",
     "account": "Compte",
-    "bag": "Sac ({{count}})",
+    "bag": "Sac ({{qty}})",
     "mega": {
       "clothing": "Vêtements",
       "all": "Tout",
@@ -191,7 +191,7 @@
     "payment_failed": "Échoué",
     "payment_status": "Statut du paiement",
     "order_number": "Commande n°{{id}}",
-    "items_count": "{{count}} articles",
+    "items_count": "{{qty}} articles",
     "total_label": "Total : {{amount}}",
     "intl_shipping_error": "La livraison internationale n'est pas disponible pour le moment. Nous livrons actuellement uniquement en Algérie.",
     "view_orders": "Voir mes Commandes",

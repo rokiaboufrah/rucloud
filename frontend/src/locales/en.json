@@ -14,7 +14,7 @@
     "search": "Search",
     "search_hint": "Search by product name or description",
     "account": "Account",
-    "bag": "Bag ({{count}})",
+    "bag": "Bag ({{qty}})",
     "mega": {
       "clothing": "Clothing",
       "all": "All",
@@ -191,7 +191,7 @@
     "payment_failed": "Failed",
     "payment_status": "Payment status",
     "order_number": "Order #{{id}}",
-    "items_count": "{{count}} items",
+    "items_count": "{{qty}} items",
     "total_label": "Total: {{amount}}",
     "intl_shipping_error": "International shipping is not available at this time. We currently ship within Algeria only.",
     "view_orders": "View My Orders",

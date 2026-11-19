@@ -541,7 +541,7 @@ function OrderHistory({ orders, onOrderUpdated }: { orders: Order[]; onOrderUpda
                     {t('checkout.order_number', { id: o.id })}
                   </p>
                   <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                    {new Date(o.created_at).toLocaleDateString()} &middot; {t('checkout.items_count', { count: o.items?.length || 0 })}
+                    {new Date(o.created_at).toLocaleDateString()} &middot; {t('checkout.items_count', { qty: o.items?.length || 0 })}
                   </p>
                 </div>
                 <div style={{ textAlign: 'right' }}>
