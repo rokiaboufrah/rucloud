@@ -5,6 +5,13 @@ db.sqlite3
 .DS_Store
 backend/static/
 backend/media/
+backend/data.json
 frontend/node_modules/
 frontend/dist/
-
+.env
+.env.*
+!.env.example
+frontend/.env*
+!frontend/.env.production.example
+*.log
+.vercel/

@@ -12,7 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'full_name', 'email', 'phone', 'address', 'city', 'wilaya_code', 'delivery_type', 'shipping_cost', 'country', 'status', 'payment_method', 'payment_status', 'ccp_ref', 'payment_receipt', 'total', 'notes', 'items', 'created_at']
-        read_only_fields = ['status', 'payment_status', 'created_at']
+        read_only_fields = ['status', 'payment_status', 'payment_receipt', 'total', 'created_at']
 
 class CreateOrderSerializer(serializers.Serializer):
     full_name = serializers.CharField()

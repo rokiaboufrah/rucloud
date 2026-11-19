@@ -223,14 +223,14 @@ export default function Navbar() {
                 color: 'var(--color-text-muted)', cursor: 'pointer',
                 padding: '14px 0 14px 20px',
               }}>
-                Search
+                {t('nav.search')}
               </button>
             </form>
             <p style={{
               fontSize: '0.65rem', color: 'var(--color-text-muted)',
               marginTop: '1rem', letterSpacing: '1px',
             }}>
-              Search by product name or description
+              {t('nav.search_hint')}
             </p>
           </div>
         </div>

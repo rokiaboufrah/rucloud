@@ -3,7 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { useParams, Link } from 'react-router-dom'
 import { productsService } from '../services/products'
 import { cartService } from '../services/cart'
-import type { ProductDetail as ProductDetailType } from '../types'
+import { getApiErrorMessage } from '../services/errors'
+import type { Product, ProductDetail as ProductDetailType } from '../types'
 
 export default function ProductDetail() {
   const { t } = useTranslation()
@@ -11,18 +12,41 @@ export default function ProductDetail() {
   const [product, setProduct] = useState<ProductDetailType | null>(null)
   const [selectedSize, setSelectedSize] = useState<number | null>(null)
   const [selectedColor, setSelectedColor] = useState<number | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loadedSlug, setLoadedSlug] = useState<string | null>(null)
+  const [related, setRelated] = useState<Product[]>([])
   const [added, setAdded] = useState(false)
   const [addError, setAddError] = useState('')
   const [openTab, setOpenTab] = useState<string | null>(null)
+  const loading = Boolean(slug) && loadedSlug !== slug
 
   useEffect(() => {
     if (!slug) return
-    setLoading(true); setOpenTab(null)
+    let active = true
     productsService.get(slug).then(p => {
+      if (!active) return
       setProduct(p)
+      setOpenTab(null)
       if (Array.isArray(p.sizes) && p.sizes.length > 0) setSelectedSize(p.sizes[0].id)
-    }).finally(() => setLoading(false))
+      if (p.category) {
+        productsService.list({ category: String(p.category) })
+          .then(all => {
+            if (active) setRelated(all.filter(item => item.slug !== p.slug).slice(0, 4))
+          })
+          .catch(() => {
+            if (active) setRelated([])
+          })
+      } else {
+        setRelated([])
+      }
+      setLoadedSlug(slug)
+    }).catch(() => {
+      if (active) {
+        setProduct(null)
+        setRelated([])
+        setLoadedSlug(slug)
+      }
+    })
+    return () => { active = false }
   }, [slug])
 
   const handleAddToCart = async () => {
@@ -33,8 +57,8 @@ export default function ProductDetail() {
       setAdded(true)
       window.dispatchEvent(new CustomEvent('cart-updated'))
       setTimeout(() => setAdded(false), 2500)
-    } catch (e: any) {
-      setAddError(e?.response?.data?.error || 'Failed to add to cart')
+    } catch (e: unknown) {
+      setAddError(getApiErrorMessage(e, t('common.error')))
       setTimeout(() => setAddError(''), 3000)
     }
   }
@@ -189,24 +213,36 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* ─── CURATED SELECTION ─── */}
-      <section style={{ padding: '0 3rem 5rem', maxWidth: 'var(--max-width)', margin: '0 auto' }}>
-        <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-          <p style={{ fontSize: '0.7rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>{t('product.you_may_also_like')}</p>
-          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', fontWeight: 300, fontStyle: 'italic', color: 'var(--color-espresso)' }}>{t('product.curated_selection')}</h2>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
-          {['Shadow Abaya', 'Cloud Set', 'Resilience Dress', 'Noir Pants'].map(name => (
-            <Link key={name} to="/shop" className="product-card" style={{ textDecoration: 'none', color: 'inherit' }}>
-              <div style={{ aspectRatio: '3/4', background: '#f5f5f5', marginBottom: '0.8rem' }} />
-              <div style={{ textAlign: 'center' }}>
-                <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.9rem', fontStyle: 'italic', marginBottom: '0.2rem' }}>{name}</p>
-                <p style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', letterSpacing: '1px' }}>DA 24,000</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* ─── CURATED SELECTION — real products from the same category ─── */}
+      {related.length > 0 && (
+        <section style={{ padding: '0 3rem 5rem', maxWidth: 'var(--max-width)', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <p style={{ fontSize: '0.7rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '0.5rem' }}>{t('product.you_may_also_like')}</p>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.8rem', fontWeight: 300, fontStyle: 'italic', color: 'var(--color-espresso)' }}>{t('product.curated_selection')}</h2>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.5rem' }}>
+            {related.map(item => (
+              <Link key={item.slug} to={`/product/${item.slug}`} className="product-card" style={{ textDecoration: 'none', color: 'inherit' }}>
+                <div style={{ aspectRatio: '3/4', background: '#f5f5f5', marginBottom: '0.8rem', overflow: 'hidden' }}>
+                  {item.primary_image ? (
+                    <img src={item.primary_image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ) : (
+                    <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '100%', color: 'var(--color-text-muted)', fontSize: '0.75rem' }}>
+                      {item.name}
+                    </span>
+                  )}
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '0.9rem', fontStyle: 'italic', marginBottom: '0.2rem' }}>{item.name}</p>
+                  <p style={{ fontSize: '0.65rem', color: 'var(--color-text-muted)', letterSpacing: '1px' }}>
+                    DA {parseFloat(item.price).toLocaleString()}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   )
 }

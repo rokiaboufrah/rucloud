@@ -14,4 +14,16 @@ export const accountsService = {
   me() {
     return api.get<User>('/accounts/me/').then(r => r.data)
   },
+  requestPasswordReset(email: string): Promise<{ message: string }> {
+    return api.post<{ message: string }>('/accounts/password/reset/', { email }).then(r => r.data)
+  },
+  confirmPasswordReset(uid: string, token: string, newPassword: string): Promise<{ message: string }> {
+    return api
+      .post<{ message: string }>('/accounts/password/reset/confirm/', {
+        uid,
+        token,
+        new_password: newPassword,
+      })
+      .then(r => r.data)
+  },
 }

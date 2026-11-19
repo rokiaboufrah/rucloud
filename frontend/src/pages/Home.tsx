@@ -6,11 +6,11 @@ import { newsletterService } from '../services/newsletter';
 import type { Product } from '../types';
 
 const colors = [
-  { name: 'Espresso', hex: '#3B2A1F' },
-  { name: 'Ivory', hex: '#F0E6D3' },
-  { name: 'Noir', hex: '#1A1008' },
-  { name: 'Sage', hex: '#8A9E7A' },
-  { name: 'Mauve', hex: '#C4A0A8' },
+  { key: 'palette_espresso', hex: '#3B2A1F' },
+  { key: 'palette_ivory', hex: '#F0E6D3' },
+  { key: 'palette_noir', hex: '#1A1008' },
+  { key: 'palette_sage', hex: '#8A9E7A' },
+  { key: 'palette_mauve', hex: '#C4A0A8' },
 ];
 
 export default function Home() {
@@ -132,7 +132,7 @@ export default function Home() {
             {colors.map((c) => (
               <div key={c.hex} style={styles.swatch}>
                 <div style={{ ...styles.swatchColor, background: c.hex }} />
-                <span style={styles.swatchName}>{c.name}</span>
+                <span style={styles.swatchName}>{t(`home.${c.key}`)}</span>
                 <span style={styles.swatchHex}>{c.hex}</span>
               </div>
             ))}

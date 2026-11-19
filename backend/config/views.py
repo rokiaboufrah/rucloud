@@ -1,11 +1,37 @@
+import logging
+
 from django.shortcuts import render
 from django.contrib.admin.views.decorators import staff_member_required
+from django.db import connection
 from django.db.models import Sum, Count
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.views.decorators.csrf import ensure_csrf_cookie
 from orders.models import Order
 from products.models import Product
 from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
+
+logger = logging.getLogger(__name__)
+
+@require_GET
+def health(request):
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT 1')
+            cursor.fetchone()
+        database = 'ok'
+    except Exception:
+        logger.exception('Health check database query failed')
+        database = 'error'
+    status = 200 if database == 'ok' else 503
+    return JsonResponse({'status': database, 'database': database}, status=status)
+
+@require_GET
+@ensure_csrf_cookie
+def csrf(request):
+    return JsonResponse({'detail': 'CSRF cookie set'})
 
 @staff_member_required
 def dashboard(request):

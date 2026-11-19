@@ -8,7 +8,9 @@ import type { Cart as CartType } from '../types'
 function saveShippingPrefs(country: string, wilayaCode: number | null, deliveryType: string) {
   try {
     localStorage.setItem('shipping_prefs', JSON.stringify({ country, wilayaCode, deliveryType }))
-  } catch {}
+  } catch {
+    // Browsers with storage disabled simply skip saving preferences.
+  }
 }
 
 export default function Cart() {
@@ -29,7 +31,6 @@ export default function Cart() {
   const orderTotal = productTotal + shippingCost
 
   useEffect(() => {
-    setLoading(true)
     cartService.get().then(setCart).catch(() => setCart(null)).finally(() => setLoading(false))
   }, [])
 
@@ -46,7 +47,7 @@ export default function Cart() {
   }
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>Loading...</div>
+    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>{t('common.loading')}</div>
   }
 
   const isEmpty = !cart || cart.items.length === 0
@@ -88,7 +89,7 @@ export default function Cart() {
             </div>
 
             <aside style={{ background: '#faf8f5', padding: '2rem', height: 'fit-content' }}>
-              <h3 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.5rem', color: 'var(--color-espresso)' }}>Order Summary</h3>
+              <h3 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.5rem', color: 'var(--color-espresso)' }}>{t('cart.order_summary')}</h3>
 
               <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem', color: 'var(--color-espresso)' }}>{t('checkout.country')}</label>

@@ -1,12 +1,25 @@
-import os, django
+import os, secrets, django
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 django.setup()
 from django.contrib.auth.models import User
 from products.models import Collection, Category, Product, ProductSize, ProductColor
 
-if not User.objects.filter(username='admin').exists():
-    User.objects.create_superuser('admin', 'admin@rucloud.dz', 'admin123')
-    print('Superuser: admin / admin123')
+skip_superuser = os.environ.get('DJANGO_SEED_SKIP_SUPERUSER', '').strip().lower() in ('1', 'true', 'yes')
+admin_username = (os.environ.get('DJANGO_ADMIN_USERNAME') or 'admin').strip()
+admin_email = (os.environ.get('DJANGO_ADMIN_EMAIL') or 'admin@example.com').strip()
+
+if skip_superuser:
+    print('Skipping superuser creation (DJANGO_SEED_SKIP_SUPERUSER is set)')
+elif not User.objects.filter(username=admin_username).exists():
+    admin_password = (os.environ.get('DJANGO_ADMIN_PASSWORD') or '').strip()
+    generated_password = not admin_password
+    if generated_password:
+        admin_password = secrets.token_urlsafe(16)
+    User.objects.create_superuser(admin_username, admin_email, admin_password)
+    if generated_password:
+        print(f'Generated password for superuser {admin_username}: {admin_password}')
+    else:
+        print(f'Superuser created: {admin_username}')
 
 Collection.objects.get_or_create(name="Spring '26", slug='spring-26', defaults={'order': 1})
 Collection.objects.get_or_create(name='Essentials', slug='essentials', defaults={'order': 2})

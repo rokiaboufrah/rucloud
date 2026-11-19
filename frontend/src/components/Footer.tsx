@@ -29,7 +29,13 @@ export default function Footer() {
         {/* Shop */}
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.shop_title')}</h4>
-          {[{ label: 'All', cat: '' }, { label: 'Abayas', cat: 'abayas' }, { label: 'Sets', cat: 'sets' }, { label: 'Dresses', cat: 'dresses' }, { label: 'Scarves', cat: 'scarves' }].map(item => (
+          {[
+            { label: t('nav.mega.all'), cat: '' },
+            { label: t('nav.mega.abayas'), cat: 'abayas' },
+            { label: t('nav.mega.sets'), cat: 'sets' },
+            { label: t('nav.mega.dresses'), cat: 'dresses' },
+            { label: t('nav.mega.scarves'), cat: 'scarves' },
+          ].map(item => (
             <Link key={item.label} to={item.cat ? `/shop?category=${item.cat}` : '/shop'} style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{item.label}</Link>
           ))}
         </div>
@@ -47,9 +53,9 @@ export default function Footer() {
         <div>
           <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '1.2rem', color: '#111' }}>{t('footer.support_title')}</h4>
           <Link to="/contact" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.contact')}</Link>
-          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.shipping')}</span>
-          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.returns')}</span>
-          <span style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem', opacity: 0.5 }}>{t('footer.faq')}</span>
+          <Link to="/shipping" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.shipping')}</Link>
+          <Link to="/returns" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.returns')}</Link>
+          <Link to="/faq" style={{ display: 'block', fontSize: '0.75rem', color: '#444', marginBottom: '0.6rem' }}>{t('footer.faq')}</Link>
         </div>
 
         {/* Social */}
@@ -69,7 +75,11 @@ export default function Footer() {
         fontSize: '0.65rem', color: '#666',
       }}>
         <span>{t('footer.copyright')}</span>
-        <span>{t('footer.location')}</span>
+        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
+          <Link to="/terms" style={{ color: '#666', textDecoration: 'underline' }}>{t('footer.terms')}</Link>
+          <Link to="/privacy" style={{ color: '#666', textDecoration: 'underline' }}>{t('footer.privacy')}</Link>
+          <span>{t('footer.location')}</span>
+        </div>
       </div>
     </footer>
   )

@@ -6,3 +6,4 @@ psycopg2-binary>=2.9,<3.0
 gunicorn>=23,<24
 whitenoise>=6,<7
 dj-database-url>=3,<4
+Pillow>=11,<12

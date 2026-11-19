@@ -24,6 +24,16 @@ export const ordersService = {
   get(id: number) {
     return api.get<Order>(`/orders/${id}/`).then(r => r.data)
   },
+  uploadReceipt(orderId: number, file: File): Promise<Order> {
+    const formData = new FormData()
+    formData.append('receipt', file)
+    // api.ts sets a global JSON Content-Type; override it so Django parses the multipart body.
+    return api
+      .post<Order>(`/orders/${orderId}/receipt/`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(r => r.data)
+  },
   getPaymentConfig() {
     return api.get<{ baridimob: BaridiMobConfig; ccp: CCPConfig }>('/orders/payment-config/').then(r => r.data)
   },

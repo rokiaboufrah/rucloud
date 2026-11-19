@@ -11,6 +11,9 @@ import Cart from './pages/Cart'
 import Contact from './pages/Contact'
 import Story from './pages/Story'
 import Account from './pages/Account'
+import ForgotPassword from './pages/ForgotPassword'
+import ResetPassword from './pages/ResetPassword'
+import Info from './pages/Info'
 
 export default function App() {
   const { i18n } = useTranslation()
@@ -33,6 +36,13 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/story" element={<Story />} />
           <Route path="/account" element={<Account />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+          <Route path="/shipping" element={<Info page="shipping" />} />
+          <Route path="/returns" element={<Info page="returns" />} />
+          <Route path="/faq" element={<Info page="faq" />} />
+          <Route path="/terms" element={<Info page="terms" />} />
+          <Route path="/privacy" element={<Info page="privacy" />} />
         </Routes>
       </main>
       <Footer />

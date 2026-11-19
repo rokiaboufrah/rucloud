@@ -1,8 +1,10 @@
 import { useState, useEffect, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { accountsService } from '../services/accounts'
 import { cartService } from '../services/cart'
 import { ordersService } from '../services/orders'
+import { getApiErrorMessage } from '../services/errors'
 import { wilayaShippingData, getShippingCost } from '../data/shippingData'
 import type { User, Cart as CartType, Order, CCPConfig, BaridiMobConfig } from '../types'
 
@@ -25,8 +27,8 @@ export default function Account() {
     try {
       const u = await accountsService.login(data.get('username') as string, data.get('password') as string)
       setUser(u)
-    } catch (err: any) {
-      setError(err?.response?.data?.error || 'Login failed')
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, t('account.login_failed')))
     }
   }
 
@@ -45,8 +47,8 @@ export default function Account() {
       await accountsService.register(payload)
       const u = await accountsService.login(payload.username, payload.password)
       setUser(u)
-    } catch (err: any) {
-      setError(err?.response?.data?.message?.[0] || err?.response?.data?.error || 'Registration failed')
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, t('account.register_failed')))
     }
   }
 
@@ -56,7 +58,7 @@ export default function Account() {
   }
 
   if (loading) {
-    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>Loading...</div>
+    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>{t('common.loading')}</div>
   }
 
   if (user) {
@@ -66,7 +68,7 @@ export default function Account() {
   return (
     <div>
       <header className="page-header">
-        <div className="page-eyebrow">Welcome</div>
+        <div className="page-eyebrow">{t('account.welcome')}</div>
         <h1 className="page-title">{isRegister ? t('account.register_title') : t('account.login_btn')}</h1>
       </header>
 
@@ -95,6 +97,11 @@ export default function Account() {
             <label style={{ display: 'block', fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.4rem' }}>{isRegister ? t('account.register_password') : t('account.login_password')}</label>
             <input name="password" type="password" required style={{ width: '100%', padding: '12px 15px', border: '0.5px solid var(--color-border)', fontFamily: 'var(--font-sans)', fontSize: '0.8rem' }} />
           </div>
+          {!isRegister && (
+            <Link to="/forgot-password" style={{ alignSelf: 'flex-end', fontSize: '0.7rem', color: 'var(--color-accent)', textDecoration: 'underline' }}>
+              {t('account.forgot_password')}
+            </Link>
+          )}
           <button type="submit" className="btn-dark" style={{ width: '100%', marginTop: '0.5rem' }}>
             {isRegister ? t('account.register_btn') : t('account.login_btn')}
           </button>
@@ -102,9 +109,9 @@ export default function Account() {
 
         <p style={{ textAlign: 'center', marginTop: '2rem', fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>
           {isRegister ? (
-            <>Already have an account? <button onClick={() => setIsRegister(false)} style={{ textDecoration: 'underline', color: 'var(--color-accent)', fontSize: '0.8rem' }}>Sign in</button></>
+            <>{t('account.have_account')} <button onClick={() => setIsRegister(false)} style={{ textDecoration: 'underline', color: 'var(--color-accent)', fontSize: '0.8rem' }}>{t('account.sign_in')}</button></>
           ) : (
-            <>Don't have an account? <button onClick={() => setIsRegister(true)} style={{ textDecoration: 'underline', color: 'var(--color-accent)', fontSize: '0.8rem' }}>Register</button></>
+            <>{t('account.no_account')} <button onClick={() => setIsRegister(true)} style={{ textDecoration: 'underline', color: 'var(--color-accent)', fontSize: '0.8rem' }}>{t('account.register_link')}</button></>
           )}
         </p>
       </div>
@@ -156,19 +163,23 @@ function LoggedInView({ user, onLogout }: { user: User; onLogout: () => void }) 
       setCreatedOrder(order)
       setCart(null)
       setOrders(prev => [order, ...prev])
-    } catch (err: any) {
-      setFormError(err?.response?.data?.error || err?.response?.data?.message?.[0] || 'Failed to place order')
+    } catch (err: unknown) {
+      setFormError(getApiErrorMessage(err, t('account.order_failed')))
     } finally {
       setSubmitting(false)
     }
   }
 
+  const handleOrderUpdated = (updated: Order) => {
+    setOrders(prev => prev.map(o => (o.id === updated.id ? updated : o)))
+  }
+
   if (cartLoading) {
-    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>Loading...</div>
+    return <div style={{ textAlign: 'center', padding: '6rem', color: 'var(--color-text-muted)' }}>{t('common.loading')}</div>
   }
 
   if (createdOrder) {
-    return <OrderSuccess order={createdOrder} ccpConfig={ccpConfig} baridiConfig={baridiConfig} onBack={() => setCreatedOrder(null)} />
+    return <OrderSuccess order={createdOrder} ccpConfig={ccpConfig} baridiConfig={baridiConfig} onOrderUpdated={handleOrderUpdated} onBack={() => setCreatedOrder(null)} />
   }
 
   const hasCartItems = cart && cart.items.length > 0
@@ -177,13 +188,13 @@ function LoggedInView({ user, onLogout }: { user: User; onLogout: () => void }) 
     <div>
       <header className="page-header" style={{ marginBottom: 0 }}>
         <div className="page-eyebrow">{t('account.profile')}</div>
-        <h1 className="page-title">My Account</h1>
+        <h1 className="page-title">{t('account.my_account')}</h1>
       </header>
 
       <div style={{ background: '#faf8f5', borderTop: '0.5px solid var(--color-border)', borderBottom: '0.5px solid var(--color-border)', padding: '1.5rem 2rem' }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.15rem', fontStyle: 'italic', marginBottom: '0.15rem' }}>Hello, {user.username}</p>
+            <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.15rem', fontStyle: 'italic', marginBottom: '0.15rem' }}>{t('account.hello', { name: user.username })}</p>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{user.email}</p>
           </div>
           <button onClick={onLogout} className="btn-primary">{t('account.logout')}</button>
@@ -202,11 +213,26 @@ function LoggedInView({ user, onLogout }: { user: User; onLogout: () => void }) 
             user={user}
           />
         ) : (
-          <OrderHistory orders={orders} />
+          <OrderHistory orders={orders} onOrderUpdated={handleOrderUpdated} />
         )}
       </div>
     </div>
   )
+}
+
+interface ShippingPrefs {
+  country?: string
+  wilayaCode?: number
+  deliveryType?: 'domicile' | 'stop_desk'
+}
+
+function readShippingPrefs(): ShippingPrefs {
+  try {
+    const saved = localStorage.getItem('shipping_prefs')
+    return saved ? (JSON.parse(saved) as ShippingPrefs) : {}
+  } catch {
+    return {}
+  }
 }
 
 function CheckoutForm({
@@ -216,22 +242,12 @@ function CheckoutForm({
   onSubmit: (e: React.FormEvent) => Promise<void>; submitting: boolean; error: string; user: User
 }) {
   const { t } = useTranslation()
-  const [country, setCountry] = useState('DZ')
-  const [wilayaCode, setWilayaCode] = useState(16)
-  const [deliveryType, setDeliveryType] = useState<'domicile' | 'stop_desk'>('domicile')
+  const savedPrefs = useMemo(() => readShippingPrefs(), [])
+  const [country, setCountry] = useState(savedPrefs.country || 'DZ')
+  const [wilayaCode, setWilayaCode] = useState(savedPrefs.wilayaCode || 16)
+  const [deliveryType, setDeliveryType] = useState<'domicile' | 'stop_desk'>(savedPrefs.deliveryType || 'domicile')
   const isAlgeria = country === 'DZ'
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('shipping_prefs')
-      if (saved) {
-        const prefs = JSON.parse(saved)
-        if (prefs.country) setCountry(prefs.country)
-        if (prefs.wilayaCode) setWilayaCode(prefs.wilayaCode)
-        if (prefs.deliveryType) setDeliveryType(prefs.deliveryType)
-      }
-    } catch {}
-  }, [])
   const dzMethods = ['cod', 'baridimob', 'ccp', 'bank_transfer']
   const intlMethods = ['stripe', 'paypal', 'card']
   const [method, setMethod] = useState('cod')
@@ -416,14 +432,17 @@ function CheckoutForm({
         </div>
 
         <button type="submit" disabled={submitting || !isAlgeria || (isAlgeria && wilayaCode === 0)} className="btn-dark" style={{ width: '100%', opacity: !isAlgeria ? 0.5 : 1 }}>
-          {submitting ? 'Processing...' : t('checkout.place_order')}
+          {submitting ? t('common.processing') : t('checkout.place_order')}
         </button>
       </div>
     </form>
   )
 }
 
-function OrderSuccess({ order, ccpConfig, baridiConfig, onBack }: { order: Order; ccpConfig: CCPConfig | null; baridiConfig: BaridiMobConfig | null; onBack: () => void }) {
+function OrderSuccess({ order, ccpConfig, baridiConfig, onOrderUpdated, onBack }: {
+  order: Order; ccpConfig: CCPConfig | null; baridiConfig: BaridiMobConfig | null
+  onOrderUpdated: (order: Order) => void; onBack: () => void
+}) {
   const { t } = useTranslation()
 
   return (
@@ -435,10 +454,10 @@ function OrderSuccess({ order, ccpConfig, baridiConfig, onBack }: { order: Order
       <div style={{ maxWidth: '600px', margin: '0 auto', padding: '0 2rem 4rem' }}>
         <div style={{ background: '#faf8f5', padding: '2rem', marginBottom: '1.5rem', textAlign: 'center' }}>
           <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontStyle: 'italic', marginBottom: '0.5rem' }}>
-            Order #{order.id}
+            {t('checkout.order_number', { id: order.id })}
           </p>
           <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>
-            Total: DA {parseFloat(order.total).toLocaleString()}
+            {t('checkout.total_label', { amount: `DA ${parseFloat(order.total).toLocaleString()}` })}
           </p>
           {order.delivery_type && (
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', marginTop: '0.25rem' }}>
@@ -490,6 +509,10 @@ function OrderSuccess({ order, ccpConfig, baridiConfig, onBack }: { order: Order
           </div>
         )}
 
+        {order.payment_method !== 'cod' && (
+          <ReceiptUpload order={order} onUploaded={onOrderUpdated} />
+        )}
+
         <button onClick={onBack} className="btn-primary" style={{ width: '100%' }}>
           {t('checkout.view_orders')}
         </button>
@@ -498,7 +521,7 @@ function OrderSuccess({ order, ccpConfig, baridiConfig, onBack }: { order: Order
   )
 }
 
-function OrderHistory({ orders }: { orders: Order[] }) {
+function OrderHistory({ orders, onOrderUpdated }: { orders: Order[]; onOrderUpdated: (order: Order) => void }) {
   const { t } = useTranslation()
 
   return (
@@ -511,34 +534,106 @@ function OrderHistory({ orders }: { orders: Order[] }) {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           {(orders || []).map(o => (
-            <div key={o.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.25rem', background: '#faf8f5' }}>
-              <div>
-                <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontStyle: 'italic' }}>
-                  Order #{o.id}
-                </p>
-                <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
-                  {new Date(o.created_at).toLocaleDateString()} &middot; {o.items?.length || 0} items
-                </p>
+            <div key={o.id} style={{ padding: '1.25rem', background: '#faf8f5' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontStyle: 'italic' }}>
+                    {t('checkout.order_number', { id: o.id })}
+                  </p>
+                  <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>
+                    {new Date(o.created_at).toLocaleDateString()} &middot; {t('checkout.items_count', { count: o.items?.length || 0 })}
+                  </p>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <p style={{ fontSize: '0.85rem', fontWeight: 500 }}>DA {parseFloat(o.total).toLocaleString()}</p>
+                  <span style={{
+                    display: 'inline-block',
+                    fontSize: '0.6rem',
+                    letterSpacing: '1px',
+                    textTransform: 'uppercase',
+                    padding: '2px 8px',
+                    background: o.payment_status === 'paid' ? '#d1e7dd' : o.payment_status === 'failed' ? '#f8d7da' : '#fff3cd',
+                    color: o.payment_status === 'paid' ? '#0f5132' : o.payment_status === 'failed' ? '#842029' : '#664d03',
+                    marginTop: '0.25rem',
+                  }}>
+                    {paymentStatusLabel(t, o.payment_status)}
+                  </span>
+                </div>
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <p style={{ fontSize: '0.85rem', fontWeight: 500 }}>DA {parseFloat(o.total).toLocaleString()}</p>
-                <span style={{
-                  display: 'inline-block',
-                  fontSize: '0.6rem',
-                  letterSpacing: '1px',
-                  textTransform: 'uppercase',
-                  padding: '2px 8px',
-                  background: o.payment_status === 'paid' ? '#d1e7dd' : o.payment_status === 'failed' ? '#f8d7da' : '#fff3cd',
-                  color: o.payment_status === 'paid' ? '#0f5132' : o.payment_status === 'failed' ? '#842029' : '#664d03',
-                  marginTop: '0.25rem',
-                }}>
-                  {o.payment_status === 'paid' ? t('checkout.payment_paid') : t('checkout.payment_pending')}
-                </span>
-              </div>
+              {o.payment_method !== 'cod' && o.payment_status !== 'paid' && (
+                <div style={{ marginTop: '1.25rem', borderTop: '0.5px solid var(--color-border)', paddingTop: '1.25rem' }}>
+                  <ReceiptUpload order={o} onUploaded={onOrderUpdated} />
+                </div>
+              )}
             </div>
           ))}
         </div>
       )}
+    </div>
+  )
+}
+
+function paymentStatusLabel(t: (key: string) => string, status: string): string {
+  if (status === 'paid') return t('checkout.payment_paid')
+  if (status === 'failed') return t('checkout.payment_failed')
+  return t('checkout.payment_pending')
+}
+
+function ReceiptUpload({ order, onUploaded }: { order: Order; onUploaded: (order: Order) => void }) {
+  const { t } = useTranslation()
+  const [currentOrder, setCurrentOrder] = useState(order)
+  const [uploading, setUploading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setError('')
+    setSuccess(false)
+    if (file.size > 5 * 1024 * 1024) {
+      setError(t('checkout.receipt_too_large'))
+      return
+    }
+    setUploading(true)
+    try {
+      const updated = await ordersService.uploadReceipt(currentOrder.id, file)
+      setCurrentOrder(updated)
+      setSuccess(true)
+      onUploaded(updated)
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, t('checkout.receipt_upload_error')))
+    } finally {
+      setUploading(false)
+      e.target.value = ''
+    }
+  }
+
+  return (
+    <div>
+      <p style={{ ...labelStyle, marginBottom: '0.4rem' }}>{t('checkout.receipt_upload')}</p>
+      <p style={{ fontSize: '0.75rem', lineHeight: 1.6, color: 'var(--color-text-muted)', marginBottom: '0.75rem' }}>
+        {t('checkout.receipt_hint')}
+      </p>
+      <input
+        type="file"
+        accept="image/*"
+        disabled={uploading}
+        onChange={handleFileChange}
+        style={{ fontSize: '0.75rem', maxWidth: '100%' }}
+      />
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', marginTop: '0.75rem', fontSize: '0.75rem' }}>
+        <span style={{ color: 'var(--color-text-muted)' }}>
+          {t('checkout.payment_status')}: <strong style={{ fontWeight: 500 }}>{paymentStatusLabel(t, currentOrder.payment_status)}</strong>
+        </span>
+        {success && <span style={{ color: '#0f5132' }}>{t('checkout.receipt_uploaded')} ✓</span>}
+        {currentOrder.payment_receipt && (
+          <a href={currentOrder.payment_receipt} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-accent)', textDecoration: 'underline' }}>
+            {t('checkout.receipt_view')}
+          </a>
+        )}
+      </div>
+      {error && <p style={{ color: '#dc2626', fontSize: '0.75rem', marginTop: '0.5rem' }}>{error}</p>}
     </div>
   )
 }

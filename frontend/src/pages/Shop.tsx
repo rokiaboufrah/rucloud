@@ -8,27 +8,43 @@ const categorySlugs = ['all', 'abayas', 'sets', 'dresses', 'tops', 'pants', 'sca
 
 export default function Shop() {
   const { t } = useTranslation()
-  const categoryLabels = [t('shop.filter_all'), 'Abayas', 'Sets', 'Dresses', 'Tops', 'Pants', 'Scarves', 'Accessories']
+  const categoryLabels = [
+    t('shop.filter_all'), t('nav.mega.abayas'), t('nav.mega.sets'), t('nav.mega.dresses'),
+    t('nav.mega.tops'), t('nav.mega.pants'), t('nav.mega.scarves'), t('nav.mega.accessories'),
+  ]
   const [searchParams] = useSearchParams()
   const activeCategory = searchParams.get('category') || 'all'
   const searchQuery = searchParams.get('q') || ''
   const featured = searchParams.get('featured') || ''
   const [products, setProducts] = useState<Product[]>([])
-  const [loading, setLoading] = useState(true)
+  const requestKey = `${activeCategory}|${searchQuery}|${featured}`
+  const [loadedKey, setLoadedKey] = useState<string | null>(null)
+  const loading = loadedKey !== requestKey
 
   useEffect(() => {
-    setLoading(true)
-    const params: any = {}
+    let active = true
+    const params: { category?: string; q?: string; featured?: string } = {}
     if (activeCategory !== 'all') params.category = activeCategory
     if (searchQuery) params.q = searchQuery
     if (featured) params.featured = featured
-    productsService.list(params).then(setProducts).catch(() => setProducts([])).finally(() => setLoading(false))
-  }, [activeCategory, searchQuery, featured])
+    productsService.list(params)
+      .then(result => {
+        if (!active) return
+        setProducts(result)
+        setLoadedKey(requestKey)
+      })
+      .catch(() => {
+        if (!active) return
+        setProducts([])
+        setLoadedKey(requestKey)
+      })
+    return () => { active = false }
+  }, [activeCategory, searchQuery, featured, requestKey])
 
   return (
     <div>
       <header className="page-header">
-        <div className="page-eyebrow">{searchQuery ? `Search results for "${searchQuery}"` : 'The Collection'}</div>
+        <div className="page-eyebrow">{searchQuery ? t('shop.search_results_for', { query: searchQuery }) : t('shop.the_collection')}</div>
         <h1 className="page-title">{searchQuery ? `"${searchQuery}"` : t('shop.title')}</h1>
       </header>
 
@@ -52,7 +68,7 @@ export default function Shop() {
 
         <main>
           {loading ? (
-            <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '4rem 0' }}>Loading...</p>
+            <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '4rem 0' }}>{t('common.loading')}</p>
           ) : products.length === 0 ? (
             <p style={{ textAlign: 'center', color: 'var(--color-text-muted)', padding: '4rem 0' }}>{t('shop.no_products')}</p>
           ) : (

@@ -1,0 +1,762 @@
+[
+  {
+    "model": "products.collection",
+    "pk": 1,
+    "fields": {
+      "name": "Spring '26",
+      "slug": "spring-26",
+      "description": "",
+      "image": "",
+      "order": 1,
+      "is_active": true,
+      "created_at": "2026-05-15T20:29:35.954Z"
+    }
+  },
+  {
+    "model": "products.collection",
+    "pk": 2,
+    "fields": {
+      "name": "Essentials",
+      "slug": "essentials",
+      "description": "",
+      "image": "",
+      "order": 2,
+      "is_active": true,
+      "created_at": "2026-05-15T20:29:35.966Z"
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 1,
+    "fields": {
+      "name": "Abayas",
+      "slug": "abayas",
+      "collection": null,
+      "image": "",
+      "order": 1,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 2,
+    "fields": {
+      "name": "Sets",
+      "slug": "sets",
+      "collection": null,
+      "image": "",
+      "order": 2,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 3,
+    "fields": {
+      "name": "Dresses",
+      "slug": "dresses",
+      "collection": null,
+      "image": "",
+      "order": 3,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 5,
+    "fields": {
+      "name": "Pants",
+      "slug": "pants",
+      "collection": null,
+      "image": "",
+      "order": 5,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 6,
+    "fields": {
+      "name": "Scarves",
+      "slug": "scarves",
+      "collection": null,
+      "image": "",
+      "order": 6,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 7,
+    "fields": {
+      "name": "Accessories",
+      "slug": "accessories",
+      "collection": null,
+      "image": "",
+      "order": 10,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.category",
+    "pk": 10,
+    "fields": {
+      "name": "Tops",
+      "slug": "tops",
+      "collection": null,
+      "image": "",
+      "order": 4,
+      "is_active": true
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 5,
+    "fields": {
+      "name": "Marrion set",
+      "slug": "marrion_set",
+      "description": "Marrion oversized linen set featuring a soft O-shaped neckline, designed with an elegant relaxed fit for a chic and effortless look. Crafted from breathable linen fabric, combining comfort, minimalism, and timeless sophistication.",
+      "price": "6000.00",
+      "compare_at_price": "5500.00",
+      "category": 2,
+      "collection": 1,
+      "is_active": true,
+      "is_featured": true,
+      "material": "LINEN",
+      "care_instructions": "",
+      "created_at": "2026-05-15T17:01:48.552Z",
+      "updated_at": "2026-05-15T23:12:58.794Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 7,
+    "fields": {
+      "name": "POLKA CHEMISE",
+      "slug": "ploka_chemise",
+      "description": "POLKA CHEMISE WITH SCARF\r\n\r\nA timeless expression of elegance and modern modesty, the POLKA Chemise with Scarf is designed for women who appreciate refined simplicity with a bold touch of character. Crafted from a lightweight, breathable fabric, it offers a fluid silhouette that drapes gracefully on the body while ensuring all-day comfort.\r\n\r\nThe design features subtle polka-inspired detailing that adds texture and depth without overpowering the minimalist aesthetic. Its structured yet relaxed cut makes it suitable for both casual wear and elevated occasions.\r\n\r\nPaired with a matching scarf, this piece completes a harmonious look that embodies sophistication and effortless style. The scarf can be styled freelyΓÇöwrapped, draped, or left flowingΓÇöallowing versatility while maintaining a refined modest look.\r\n\r\nPerfect for everyday elegance or special outings, the POLKA Chemise with Scarf represents a balance between tradition and contemporary fashion.",
+      "price": "6500.00",
+      "compare_at_price": "5500.00",
+      "category": 10,
+      "collection": 1,
+      "is_active": true,
+      "is_featured": true,
+      "material": "",
+      "care_instructions": "",
+      "created_at": "2026-05-15T22:01:48.552Z",
+      "updated_at": "2026-05-15T23:01:48.553Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 8,
+    "fields": {
+      "name": "τ╜ùτÉ¬σ¿à (Lu├│ Q├¡ Y├á) set",
+      "slug": "luo-qi-ya-set",
+      "description": "Elegant Chinese-inspired set crafted with a flowing oversized silhouette, blending modern minimalism with timeless oriental elegance. Designed with refined details and a graceful structure, this piece offers comfort, sophistication, and a statement look perfect for effortless chic styling.",
+      "price": "7500.00",
+      "compare_at_price": null,
+      "category": 2,
+      "collection": 2,
+      "is_active": true,
+      "is_featured": true,
+      "material": "",
+      "care_instructions": "",
+      "created_at": "2026-05-15T21:01:48.552Z",
+      "updated_at": "2026-05-15T23:01:48.574Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 10,
+    "fields": {
+      "name": "Dentelle abaya",
+      "slug": "dentelle-abaya",
+      "description": "Elegant green dentelle abaya designed with delicate lace details on the sleeves and matching scarf, creating a refined and graceful silhouette. Crafted for a modest yet sophisticated look, this piece blends timeless elegance with soft feminine touches.",
+      "price": "6500.00",
+      "compare_at_price": null,
+      "category": 1,
+      "collection": 2,
+      "is_active": true,
+      "is_featured": true,
+      "material": "plazma & Dentelle",
+      "care_instructions": "",
+      "created_at": "2026-05-15T20:01:48.552Z",
+      "updated_at": "2026-05-15T23:01:48.590Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 11,
+    "fields": {
+      "name": "Orgonza abaya",
+      "slug": "orgonza-abaya",
+      "description": "Elegant green orgonza abaya designed with delicate orgonza details on the sleeves and matching scarf, creating a refined and graceful silhouette. Crafted for a modest yet sophisticated look, this piece blends timeless elegance with soft feminine touches.",
+      "price": "6500.00",
+      "compare_at_price": null,
+      "category": 1,
+      "collection": 2,
+      "is_active": true,
+      "is_featured": true,
+      "material": "plazma & Orgonza",
+      "care_instructions": "",
+      "created_at": "2026-05-15T19:01:48.552Z",
+      "updated_at": "2026-05-15T23:01:48.610Z"
+    }
+  },
+  {
+    "model": "products.product",
+    "pk": 23,
+    "fields": {
+      "name": "Dentelle Skirt",
+      "slug": "dentelle-skirt",
+      "description": "",
+      "price": "3800.00",
+      "compare_at_price": null,
+      "category": 3,
+      "collection": 1,
+      "is_active": true,
+      "is_featured": true,
+      "material": "Dentelle",
+      "care_instructions": "",
+      "created_at": "2026-05-15T18:01:48.552Z",
+      "updated_at": "2026-05-15T23:10:49.194Z"
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+      "product": 7,
+      "image": "products/IMG_1739.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 2,
+    "fields": {
+      "product": 7,
+      "image": "products/IMG_1741_2.JPG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+      "product": 7,
+      "image": "products/IMG_1723_1.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+      "product": 7,
+      "image": "products/IMG_1729.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1593.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1594.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1591.JPG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 8,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1588.JPG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 9,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1595.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 10,
+    "fields": {
+      "product": 8,
+      "image": "products/IMG_1549.jpg",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 11,
+    "fields": {
+      "product": 10,
+      "image": "products/IMG_0382.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 12,
+    "fields": {
+      "product": 10,
+      "image": "products/IMG_0386.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 13,
+    "fields": {
+      "product": 10,
+      "image": "products/IMG_0385.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 14,
+    "fields": {
+      "product": 10,
+      "image": "products/IMG_0752.JPG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 15,
+    "fields": {
+      "product": 10,
+      "image": "products/IMG_0379.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 16,
+    "fields": {
+      "product": 11,
+      "image": "products/IMG_0389_pGynHHd.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 17,
+    "fields": {
+      "product": 11,
+      "image": "products/IMG_0393.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 18,
+    "fields": {
+      "product": 11,
+      "image": "products/IMG_0392.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 19,
+    "fields": {
+      "product": 11,
+      "image": "products/IMG_0395.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 20,
+    "fields": {
+      "product": 11,
+      "image": "products/IMG_0394.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 21,
+    "fields": {
+      "product": 23,
+      "image": "products/11702DF9-A103-463F-80A3-807A0C6FE7EF.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 22,
+    "fields": {
+      "product": 5,
+      "image": "products/IMG_0441.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 23,
+    "fields": {
+      "product": 5,
+      "image": "products/IMG_0440.PNG",
+      "alt_text": "",
+      "order": 0,
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 18,
+    "fields": {
+      "product": 5,
+      "name": "S",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 19,
+    "fields": {
+      "product": 5,
+      "name": "M",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 20,
+    "fields": {
+      "product": 5,
+      "name": "L",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 22,
+    "fields": {
+      "product": 7,
+      "name": "S",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 23,
+    "fields": {
+      "product": 7,
+      "name": "M",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 24,
+    "fields": {
+      "product": 7,
+      "name": "L",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 25,
+    "fields": {
+      "product": 7,
+      "name": "XL",
+      "stock": 99
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 26,
+    "fields": {
+      "product": 5,
+      "name": "XL",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 27,
+    "fields": {
+      "product": 8,
+      "name": "L",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 28,
+    "fields": {
+      "product": 8,
+      "name": "XL",
+      "stock": 99
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 30,
+    "fields": {
+      "product": 10,
+      "name": "Standard",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 31,
+    "fields": {
+      "product": 11,
+      "name": "Standard",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 78,
+    "fields": {
+      "product": 23,
+      "name": "XS",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 79,
+    "fields": {
+      "product": 23,
+      "name": "S",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 80,
+    "fields": {
+      "product": 23,
+      "name": "M",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 81,
+    "fields": {
+      "product": 23,
+      "name": "L",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productsize",
+    "pk": 82,
+    "fields": {
+      "product": 23,
+      "name": "XL",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 8,
+    "fields": {
+      "product": 5,
+      "name": "Ivory",
+      "hex_code": "#F0E6D3",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 9,
+    "fields": {
+      "product": 5,
+      "name": "Black",
+      "hex_code": "#000000",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 13,
+    "fields": {
+      "product": 7,
+      "name": "yellow",
+      "hex_code": "#e0d465",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 14,
+    "fields": {
+      "product": 5,
+      "name": "midnight blue",
+      "hex_code": "#191970",
+      "stock": 0
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 15,
+    "fields": {
+      "product": 5,
+      "name": "sky blue",
+      "hex_code": "#acebff",
+      "stock": 0
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 16,
+    "fields": {
+      "product": 8,
+      "name": "Grey",
+      "hex_code": "#747474",
+      "stock": 89
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 21,
+    "fields": {
+      "product": 10,
+      "name": "Green",
+      "hex_code": "#86895d",
+      "stock": 5
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 22,
+    "fields": {
+      "product": 11,
+      "name": "Green",
+      "hex_code": "#86895d",
+      "stock": 99
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 30,
+    "fields": {
+      "product": 5,
+      "name": "Sage",
+      "hex_code": "#8A9E7A",
+      "stock": 10
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 46,
+    "fields": {
+      "product": 23,
+      "name": "white",
+      "hex_code": "#ffffff",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 47,
+    "fields": {
+      "product": 23,
+      "name": "Black",
+      "hex_code": "#000000",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 48,
+    "fields": {
+      "product": 23,
+      "name": "Top",
+      "hex_code": "#979086",
+      "stock": 100
+    }
+  },
+  {
+    "model": "products.productcolor",
+    "pk": 49,
+    "fields": {
+      "product": 23,
+      "name": "Midnight bleu",
+      "hex_code": "#1c3161",
+      "stock": 100
+    }
+  }
+]

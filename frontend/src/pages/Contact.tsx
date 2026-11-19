@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { contactService } from '../services/contact'
+import { getApiErrorMessage } from '../services/errors'
 
 export default function Contact() {
   const { t } = useTranslation()
@@ -14,8 +15,8 @@ export default function Contact() {
     try {
       await contactService.send(form)
       setSubmitted(true)
-    } catch (err: any) {
-      setError(err?.response?.data?.message || t('contact.error'))
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, t('contact.error')))
     }
   }
 
@@ -23,7 +24,7 @@ export default function Contact() {
     <div>
       <header className="page-header">
         <div className="page-eyebrow">{t('contact.title')}</div>
-        <h1 className="page-title">Contact Us</h1>
+        <h1 className="page-title">{t('contact.heading')}</h1>
       </header>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', padding: '4rem 2rem', maxWidth: '1000px', margin: '0 auto' }}>
@@ -33,7 +34,7 @@ export default function Contact() {
           </p>
           <div style={{ marginBottom: '2rem' }}>
             <h4 style={{ fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.5rem', color: 'var(--color-espresso)' }}>{t('contact.info_email')}</h4>
-            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>rucloudz@gmail.com</p>
+            <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)' }}>{t('contact.info_email_address')}</p>
           </div>
         </div>
 
@@ -41,7 +42,7 @@ export default function Contact() {
           {submitted ? (
             <div style={{ textAlign: 'center', padding: '3rem', background: '#faf8f5' }}>
               <p style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', fontStyle: 'italic', color: 'var(--color-sage)' }}>{t('contact.success')}</p>
-              <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>We'll get back to you soon.</p>
+              <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>{t('contact.follow_up')}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>

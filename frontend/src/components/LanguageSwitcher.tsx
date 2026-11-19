@@ -7,8 +7,7 @@ export default function LanguageSwitcher() {
   const switchLang = (code: string) => {
     i18n.changeLanguage(code)
     localStorage.setItem('lang', code)
-    document.documentElement.dir = LANGUAGE_OPTIONS.find(l => l.code === code)?.dir || 'ltr'
-    document.documentElement.lang = code
+    // App.tsx keeps document.dir / document.lang in sync with i18n.language.
   }
 
   return (
